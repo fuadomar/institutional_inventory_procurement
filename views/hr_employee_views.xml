@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- HR Employee Form View Extension (Institutional Holdings & Supplies) -->
+        <record id="view_employee_form_institutional" model="ir.ui.view">
+            <field name="name">hr.employee.form.institutional</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[@name='button_box']" position="inside">
+                    <button class="oe_stat_button" name="action_view_held_assets" type="object" icon="fa-laptop">
+                        <div class="o_stat_info">
+                            <field name="active_held_asset_count" class="o_stat_value"/>
+                            <span class="o_stat_text">Held Assets</span>
+                        </div>
+                    </button>
+                    <button class="oe_stat_button" name="action_view_consumed_supplies" type="object" icon="fa-cubes">
+                        <div class="o_stat_info">
+                            <field name="total_consumed_qty" class="o_stat_value"/>
+                            <span class="o_stat_text">Consumed</span>
+                        </div>
+                    </button>
+                    <button class="oe_stat_button" name="action_view_requisitions" type="object" icon="fa-file-text-o">
+                        <div class="o_stat_info">
+                            <field name="total_requisition_count" class="o_stat_value"/>
+                            <span class="o_stat_text">Requisitions</span>
+                        </div>
+                    </button>
+                </xpath>
+                <xpath expr="//notebook" position="inside">
+                    <page string="Institutional Custody &amp; Supplies" name="institutional_custody">
+                        <group string="Active Serialized Asset Custody (Equipment Held by Personnel)">
+                            <field name="held_asset_ids" readonly="1" nolabel="1">
+                                <list string="Active Equipment Holdings" decoration-info="status == 'issued'">
+                                    <field name="name" string="Asset Tag"/>
+                                    <field name="product_id" string="Equipment / Product"/>
+                                    <field name="serial_number" string="Serial #"/>
+                                    <field name="condition" widget="badge"/>
+                                    <field name="location" string="Desk / Office Location"/>
+                                    <field name="acquisition_date" string="Issued Date"/>
+                                    <field name="status" widget="badge"/>
+                                    <button name="action_mark_returned" string="Return to Store" type="object" icon="fa-undo" class="btn btn-sm btn-outline-warning" confirm="Are you sure you want to return this asset back to Central Store?"/>
+                                </list>
+                            </field>
+                        </group>
+                        <group string="Cumulative Consumed Supplies Log">
+                            <field name="consumed_line_ids" readonly="1" nolabel="1">
+                                <list string="Consumed Supplies History">
+                                    <field name="requisition_id" string="Requisition Ref"/>
+                                    <field name="product_id" string="Consumable Item"/>
+                                    <field name="issued_qty" string="Quantity Consumed"/>
+                                    <field name="department_id" string="Department"/>
+                                    <field name="state" widget="badge"/>
+                                </list>
+                            </field>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- Action: Personnel Directory & Holdings -->
+        <record id="action_institutional_personnel_directory" model="ir.actions.act_window">
+            <field name="name">Personnel Profile Holdings &amp; Custody</field>
+            <field name="res_model">hr.employee</field>
+            <field name="view_mode">kanban,list,form</field>
+            <field name="context">{'chat_icon': True}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    View university faculty, officers, and staff asset custody &amp; supply consumption profiles.
+                </p>
+                <p>
+                    Check real-time hardware holdings (laptops, desktops, lab equipment) and cumulative consumable item usage per employee.
+                </p>
+            </field>
+        </record>
+
+        <!-- Menu Item: Personnel Profile Holdings in Institutional Navigation -->
+        <menuitem id="menu_institutional_personnel_directory"
+                  name="Personnel Profile Holdings"
+                  parent="menu_institutional_root"
+                  action="action_institutional_personnel_directory"
+                  sequence="25"/>
+
+    </data>
+</odoo>

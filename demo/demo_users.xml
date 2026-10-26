@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <!-- Executive (Vice-Chancellor) -->
+        <record id="demo_user_vc" model="res.users">
+            <field name="name">Prof. Dr. Engr. Md. Zulhash Uddin (Vice-Chancellor - BUTEX)</field>
+            <field name="login">vc@butex.edu.bd</field>
+            <field name="password">vc123</field>
+            <field name="email">vc@butex.edu.bd</field>
+            <field name="group_ids" eval="[(6, 0, [ref('base.group_user'), ref('hr.group_hr_user'), ref('group_institutional_registrar')])]"/>
+        </record>
+
+        <record id="demo_user_ps_vc" model="res.users">
+            <field name="name">Md. Ehsanul Karim (PS to Vice-Chancellor - BUTEX)</field>
+            <field name="login">ps_vc@butex.edu.bd</field>
+            <field name="password">ps123</field>
+            <field name="email">ps_vc@butex.edu.bd</field>
+            <field name="group_ids" eval="[(6, 0, [ref('base.group_user'), ref('hr.group_hr_user'), ref('group_institutional_user')])]"/>
+        </record>
+
+        <!-- Officers & Administration -->
+        <record id="demo_user_registrar" model="res.users">
+            <field name="name">Md. Kabedul Islam (Head Registrar - BUTEX)</field>
+            <field name="login">registrar@butex.edu.bd</field>
+            <field name="password">registrar123</field>
+            <field name="email">registrar@butex.edu.bd</field>
+            <field name="group_ids" eval="[(6, 0, [ref('base.group_user'), ref('hr.group_hr_user'), ref('group_institutional_registrar')])]"/>
+        </record>
+
+        <record id="demo_user_store_incharge" model="res.users">
+            <field name="name">Md. Alamgir Hossain (Central Store Incharge - BUTEX)</field>
+            <field name="login">store@butex.edu.bd</field>
+            <field name="password">store123</field>
+            <field name="email">store@butex.edu.bd</field>
+            <field name="group_ids" eval="[(6, 0, [ref('base.group_user'), ref('hr.group_hr_user'), ref('group_institutional_store_incharge')])]"/>
+        </record>
+
+        <record id="demo_user_it_director" model="res.users">
+            <field name="name">Engr. Md. Moniruzzaman (Director, IT Cell - BUTEX)</field>
+            <field name="login">it_director@butex.edu.bd</field>
+            <field name="password">it123</field>
+            <field name="email">it_director@butex.edu.bd</field>
+            <field name="group_ids" eval="[(6, 0, [ref('base.group_user'), ref('hr.group_hr_user'), ref('group_institutional_dept_head')])]"/>
+        </record>
+
+        <record id="demo_user_net_admin" model="res.users">
+            <field name="name">Engr. Sharif Ahmed (Network Administrator - BUTEX)</field>
+            <field name="login">netadmin@butex.edu.bd</field>
+            <field name="password">officer123</field>
+            <field name="email">netadmin@butex.edu.bd</field>
+            <field name="group_ids" eval="[(6, 0, [ref('base.group_user'), ref('hr.group_hr_user'), ref('group_institutional_user')])]"/>
+        </record>
+
+        <record id="demo_user_officer" model="res.users">
+            <field name="name">Tanvir Ahmed (Senior IT Officer - BUTEX)</field>
+            <field name="login">tanvir@butex.edu.bd</field>
+            <field name="password">officer123</field>
+            <field name="email">tanvir@butex.edu.bd</field>
+            <field name="group_ids" eval="[(6, 0, [ref('base.group_user'), ref('hr.group_hr_user'), ref('group_institutional_user')])]"/>
+        </record>
+
+        <record id="demo_user_deputy_controller" model="res.users">
+            <field name="name">Syeda Nurun Nahar (Deputy Controller of Exams - BUTEX)</field>
+            <field name="login">exam_deputy@butex.edu.bd</field>
+            <field name="password">officer123</field>
+            <field name="email">exam_deputy@butex.edu.bd</field>
+            <field name="group_ids" eval="[(6, 0, [ref('base.group_user'), ref('hr.group_hr_user'), ref('group_institutional_user')])]"/>
+        </record>
+
+        <record id="demo_user_finance_ad" model="res.users">
+            <field name="name">Mohammad Ali (Assistant Director, Finance - BUTEX)</field>
+            <field name="login">finance@butex.edu.bd</field>
+            <field name="password">officer123</field>
+            <field name="email">finance@butex.edu.bd</field>
+            <field name="group_ids" eval="[(6, 0, [ref('base.group_user'), ref('hr.group_hr_user'), ref('group_institutional_user')])]"/>
+        </record>
+
+        <!-- Faculty Members / Teachers -->
+        <record id="demo_user_dept_head_fe" model="res.users">
+            <field name="name">Prof. Dr. Abul Kashem (Head, Fabric Engg - BUTEX)</field>
+            <field name="login">head_fe@butex.edu.bd</field>
+            <field name="password">head123</field>
+            <field name="email">head_fe@butex.edu.bd</field>
+            <field name="group_ids" eval="[(6, 0, [ref('base.group_user'), ref('hr.group_hr_user'), ref('group_institutional_dept_head')])]"/>
+        </record>
+
+        <record id="demo_user_prof_mashiur" model="res.users">
+            <field name="name">Prof. Dr. Engr. Md. Mashiur Rahman Khan (Head, Textile Engg - BUTEX)</field>
+            <field name="login">mashiur@butex.edu.bd</field>
+            <field name="password">head123</field>
+            <field name="email">mashiur@butex.edu.bd</field>
+            <field name="group_ids" eval="[(6, 0, [ref('base.group_user'), ref('hr.group_hr_user'), ref('group_institutional_dept_head')])]"/>
+        </record>
+
+        <record id="demo_user_prof_ummul" model="res.users">
+            <field name="name">Prof. Dr. Ummul Khair Fatema (Head, Dyes &amp; Chemicals - BUTEX)</field>
+            <field name="login">ummul@butex.edu.bd</field>
+            <field name="password">head123</field>
+            <field name="email">ummul@butex.edu.bd</field>
+            <field name="group_ids" eval="[(6, 0, [ref('base.group_user'), ref('hr.group_hr_user'), ref('group_institutional_dept_head')])]"/>
+        </record>
+
+        <record id="demo_user_head_wpe" model="res.users">
+            <field name="name">Dr. Md. Ahashan Habib (Head, Wet Process Engg - BUTEX)</field>
+            <field name="login">head_wpe@butex.edu.bd</field>
+            <field name="password">head123</field>
+            <field name="email">head_wpe@butex.edu.bd</field>
+            <field name="group_ids" eval="[(6, 0, [ref('base.group_user'), ref('hr.group_hr_user'), ref('group_institutional_dept_head')])]"/>
+        </record>
+
+        <record id="demo_user_assoc_repon" model="res.users">
+            <field name="name">Dr. Engr. Md. Reazuddin Repon (Associate Professor, WPE - BUTEX)</field>
+            <field name="login">repon@butex.edu.bd</field>
+            <field name="password">teacher123</field>
+            <field name="email">repon@butex.edu.bd</field>
+            <field name="group_ids" eval="[(6, 0, [ref('base.group_user'), ref('hr.group_hr_user'), ref('group_institutional_user')])]"/>
+        </record>
+
+        <record id="demo_user_asst_rashed" model="res.users">
+            <field name="name">Engr. Md. Rashedul Islam (Assistant Professor, Apparel Engg - BUTEX)</field>
+            <field name="login">rashed@butex.edu.bd</field>
+            <field name="password">teacher123</field>
+            <field name="email">rashed@butex.edu.bd</field>
+            <field name="group_ids" eval="[(6, 0, [ref('base.group_user'), ref('hr.group_hr_user'), ref('group_institutional_user')])]"/>
+        </record>
+
+        <!-- 3rd Class / Support Staff -->
+        <record id="demo_user_store_assistant" model="res.users">
+            <field name="name">Md. Abul Kalam (Senior Store Assistant - BUTEX)</field>
+            <field name="login">kalam@butex.edu.bd</field>
+            <field name="password">staff123</field>
+            <field name="email">kalam@butex.edu.bd</field>
+            <field name="group_ids" eval="[(6, 0, [ref('base.group_user'), ref('hr.group_hr_user'), ref('group_institutional_user')])]"/>
+        </record>
+
+        <record id="demo_user_office_assistant" model="res.users">
+            <field name="name">Md. Jahangir Alam (Office Assistant, Registrar Office - BUTEX)</field>
+            <field name="login">jahangir@butex.edu.bd</field>
+            <field name="password">staff123</field>
+            <field name="email">jahangir@butex.edu.bd</field>
+            <field name="group_ids" eval="[(6, 0, [ref('base.group_user'), ref('hr.group_hr_user'), ref('group_institutional_user')])]"/>
+        </record>
+
+        <record id="demo_user_lab_tech" model="res.users">
+            <field name="name">Rafiqul Islam (Lab Technician, Wet Process Lab - BUTEX)</field>
+            <field name="login">rafiq@butex.edu.bd</field>
+            <field name="password">staff123</field>
+            <field name="email">rafiq@butex.edu.bd</field>
+            <field name="group_ids" eval="[(6, 0, [ref('base.group_user'), ref('hr.group_hr_user'), ref('group_institutional_user')])]"/>
+        </record>
+
+        <record id="demo_user_machine_op" model="res.users">
+            <field name="name">Shahinur Rahman (Senior Machine Operator, Fabric Lab - BUTEX)</field>
+            <field name="login">shahin@butex.edu.bd</field>
+            <field name="password">staff123</field>
+            <field name="email">shahin@butex.edu.bd</field>
+            <field name="group_ids" eval="[(6, 0, [ref('base.group_user'), ref('hr.group_hr_user'), ref('group_institutional_user')])]"/>
+        </record>
+
+        <!-- Store Admin -->
+        <record id="demo_user_store_admin" model="res.users">
+            <field name="name">Chief Store Admin (BUTEX)</field>
+            <field name="login">admin@butex.edu.bd</field>
+            <field name="password">admin123</field>
+            <field name="email">admin@butex.edu.bd</field>
+            <field name="group_ids" eval="[(6, 0, [ref('base.group_user'), ref('hr.group_hr_user'), ref('group_institutional_admin')])]"/>
+        </record>
+
+    </data>
+</odoo>

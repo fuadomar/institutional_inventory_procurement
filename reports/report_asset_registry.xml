@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_asset_registry_template">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <div class="text-center mb-4">
+                            <h2>INSTITUTIONAL ASSET &amp; IT COMPONENT REGISTRY</h2>
+                            <p class="text-muted">Central Store &amp; IT Asset Audit Record</p>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-6">
+                                <strong>Asset Tag:</strong> <span t-field="doc.name"/><br/>
+                                <strong>Product Name:</strong> <span t-field="doc.product_id.name"/><br/>
+                                <strong>Serial Number:</strong> <span t-field="doc.serial_number"/><br/>
+                                <strong>Condition:</strong> <span t-field="doc.condition"/>
+                            </div>
+                            <div class="col-6 text-end">
+                                <strong>Availability Status:</strong> <span t-field="doc.status"/><br/>
+                                <strong>Department:</strong> <span t-field="doc.department_id.name"/><br/>
+                                <strong>Current Holder:</strong> <span t-field="doc.assigned_user_id.name"/><br/>
+                                <strong>Location:</strong> <span t-field="doc.location"/>
+                            </div>
+                        </div>
+
+                        <t t-if="doc.component_ids">
+                            <h4 class="mt-4 text-primary">Installed Hardware Component Breakdown</h4>
+                            <table class="table table-bordered table-sm mt-2">
+                                <thead>
+                                    <tr class="table-light">
+                                        <th>Component Type</th>
+                                        <th>Brand / Model</th>
+                                        <th>Capacity / Specification</th>
+                                        <th>Serial Number</th>
+                                        <th>Condition</th>
+                                        <th>Installed Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-foreach="doc.component_ids" t-as="comp">
+                                        <tr>
+                                            <td><span t-field="comp.component_type"/></td>
+                                            <td><span t-field="comp.name"/></td>
+                                            <td><span t-field="comp.capacity_or_spec"/></td>
+                                            <td><span t-field="comp.serial_number"/></td>
+                                            <td><span t-field="comp.condition"/></td>
+                                            <td><span t-field="comp.installed_date"/></td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                            </table>
+                        </t>
+
+                        <t t-if="doc.swap_history_ids">
+                            <h4 class="mt-4 text-danger">Component Replacement &amp; Swap History Log</h4>
+                            <table class="table table-bordered table-sm mt-2">
+                                <thead>
+                                    <tr class="table-warning">
+                                        <th>Swap Date</th>
+                                        <th>Component Type</th>
+                                        <th>Old Component</th>
+                                        <th>New Component Installed</th>
+                                        <th>Technician</th>
+                                        <th>Replacement Reason</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-foreach="doc.swap_history_ids" t-as="swap">
+                                        <tr>
+                                            <td><span t-field="swap.swap_date"/></td>
+                                            <td><span t-field="swap.component_type"/></td>
+                                            <td><span t-field="swap.old_component_name"/></td>
+                                            <td><span t-field="swap.new_component_name"/></td>
+                                            <td><span t-field="swap.technician_id.name"/></td>
+                                            <td><span t-field="swap.reason"/></td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                            </table>
+                        </t>
+
+                        <div class="row mt-5 pt-4">
+                            <div class="col-6">
+                                <strong>Inspected By:</strong> Store Incharge / IT Officer<br/>
+                                <strong>Date:</strong> <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d')"/>
+                            </div>
+                        </div>
+
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

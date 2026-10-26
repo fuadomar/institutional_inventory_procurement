@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <!-- Real BUTEX Departments & Executive Entities -->
+        <record id="demo_dept_vc" model="hr.department">
+            <field name="name">Vice-Chancellor Office (VC Entity) - BUTEX</field>
+            <field name="manager_id" eval="False"/>
+        </record>
+
+        <record id="demo_dept_registrar" model="hr.department">
+            <field name="name">Registrar Office - BUTEX</field>
+            <field name="manager_id" eval="False"/>
+        </record>
+
+        <record id="demo_dept_store" model="hr.department">
+            <field name="name">Central Store &amp; Procurement Section - BUTEX</field>
+            <field name="manager_id" eval="False"/>
+        </record>
+
+        <record id="demo_dept_it" model="hr.department">
+            <field name="name">IT Cell &amp; Campus Network Center - BUTEX</field>
+            <field name="manager_id" eval="False"/>
+        </record>
+
+        <record id="demo_dept_te" model="hr.department">
+            <field name="name">Department of Textile Engineering (TE) - BUTEX</field>
+            <field name="manager_id" eval="False"/>
+        </record>
+
+        <record id="demo_dept_fe" model="hr.department">
+            <field name="name">Department of Fabric Engineering (FE) - BUTEX</field>
+            <field name="manager_id" eval="False"/>
+        </record>
+
+        <record id="demo_dept_wpe" model="hr.department">
+            <field name="name">Department of Wet Process Engineering (WPE) - BUTEX</field>
+            <field name="manager_id" eval="False"/>
+        </record>
+
+        <record id="demo_dept_dce" model="hr.department">
+            <field name="name">Department of Dyes &amp; Chemicals Engineering (DCE) - BUTEX</field>
+            <field name="manager_id" eval="False"/>
+        </record>
+
+        <record id="demo_dept_ae" model="hr.department">
+            <field name="name">Department of Apparel Engineering (AE) - BUTEX</field>
+            <field name="manager_id" eval="False"/>
+        </record>
+
+        <record id="demo_dept_exam" model="hr.department">
+            <field name="name">Office of the Controller of Examinations - BUTEX</field>
+            <field name="manager_id" eval="False"/>
+        </record>
+
+        <record id="demo_dept_finance" model="hr.department">
+            <field name="name">Finance &amp; Accounts Office - BUTEX</field>
+            <field name="manager_id" eval="False"/>
+        </record>
+
+    </data>
+</odoo>

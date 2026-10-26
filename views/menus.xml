@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- Main Top Level Menu -->
+        <menuitem id="menu_institutional_root"
+                  name="Institutional Store &amp; Procurement"
+                  web_icon="institutional_inventory_procurement,static/description/icon.png"
+                  sequence="10"/>
+
+        <!-- Menu Categories -->
+        <menuitem id="menu_requisitions_category"
+                  name="Requisitions &amp; Supplies"
+                  parent="menu_institutional_root"
+                  sequence="10"/>
+
+        <menuitem id="menu_asset_category"
+                  name="Asset &amp; IT Tracking"
+                  parent="menu_institutional_root"
+                  sequence="20"/>
+
+        <menuitem id="menu_reporting_category"
+                  name="Reporting &amp; Analytics"
+                  parent="menu_institutional_root"
+                  sequence="30"/>
+
+    </data>
+</odoo>

@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_requisition_slip_template">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <div class="text-center mb-4">
+                            <h2>INSTITUTIONAL STORE REQUISITION &amp; ISSUE VOUCHER</h2>
+                            <p class="text-muted">Central Store Office — Supply Management</p>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-6">
+                                <strong>Requisition Ref:</strong> <span t-field="doc.name"/><br/>
+                                <strong>Requester:</strong> <span t-field="doc.requested_by_id.name"/><br/>
+                                <strong>Department:</strong> <span t-field="doc.department_id.name"/><br/>
+                                <strong>Budget Allocation:</strong> <span t-field="doc.allocation_id.name"/>
+                            </div>
+                            <div class="col-6 text-end">
+                                <strong>Transaction Date:</strong> <span t-field="doc.transaction_date"/><br/>
+                                <strong>System Creation Date:</strong> <span t-field="doc.actual_create_date"/><br/>
+                                <strong>Status:</strong> <span t-field="doc.state"/><br/>
+                                <t t-if="doc.is_backdated">
+                                    <span class="badge bg-warning text-dark">BACK-DATED ENTRY</span>
+                                </t>
+                            </div>
+                        </div>
+
+                        <h4 class="mt-4">Requested Item Details</h4>
+                        <table class="table table-bordered table-sm mt-2">
+                            <thead>
+                                <tr class="table-light">
+                                    <th>#</th>
+                                    <th>Item Description</th>
+                                    <th>Category Type</th>
+                                    <th class="text-end">Requested Qty</th>
+                                    <th class="text-end">Approved / Issued Qty</th>
+                                    <th>Condition</th>
+                                    <th class="text-end">Est. Unit Cost</th>
+                                    <th class="text-end">Subtotal Cost</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-set="i" t-value="1"/>
+                                <t t-foreach="doc.line_ids" t-as="line">
+                                    <tr>
+                                        <td><t t-esc="i"/></td>
+                                        <td><span t-field="line.product_id.display_name"/></td>
+                                        <td><span t-field="line.institutional_item_type"/></td>
+                                        <td class="text-end"><span t-field="line.requested_qty"/></td>
+                                        <td class="text-end font-weight-bold">
+                                            <span t-field="line.approved_qty"/>
+                                            <t t-if="line.qty_modified">
+                                                <small class="text-danger d-block">(Edited by Store)</small>
+                                            </t>
+                                        </td>
+                                        <td><span t-field="line.item_condition"/></td>
+                                        <td class="text-end"><span t-field="line.unit_price" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/></td>
+                                        <td class="text-end"><span t-field="line.subtotal_cost" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/></td>
+                                    </tr>
+                                    <t t-set="i" t-value="i+1"/>
+                                </t>
+                            </tbody>
+                        </table>
+
+                        <div class="row justify-content-end mt-2">
+                            <div class="col-4">
+                                <table class="table table-sm">
+                                    <tr>
+                                        <td><strong>Total Estimated Cost:</strong></td>
+                                        <td class="text-end font-weight-bold">
+                                            <span t-field="doc.total_estimated_cost" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+
+                        <t t-if="doc.audit_ids">
+                            <h5 class="mt-4 text-primary">Registrar Audit Log &amp; Quantity Adjustments</h5>
+                            <table class="table table-bordered table-sm">
+                                <thead>
+                                    <tr class="table-secondary">
+                                        <th>Date/Time</th>
+                                        <th>Action Type</th>
+                                        <th>User</th>
+                                        <th>Original Qty</th>
+                                        <th>Modified Qty</th>
+                                        <th>Reason / Audit Notes</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-foreach="doc.audit_ids" t-as="audit">
+                                        <tr>
+                                            <td><span t-field="audit.modified_date"/></td>
+                                            <td><span t-field="audit.audit_type"/></td>
+                                            <td><span t-field="audit.modified_by_id.name"/></td>
+                                            <td><span t-field="audit.original_qty"/></td>
+                                            <td><span t-field="audit.new_qty"/></td>
+                                            <td><span t-field="audit.reason"/></td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                            </table>
+                        </t>
+
+                        <!-- Signatures -->
+                        <div class="row mt-5 pt-4">
+                            <div class="col-4 text-center">
+                                _______________________<br/>
+                                <strong>Requested By</strong><br/>
+                                (<span t-field="doc.requested_by_id.name"/>)
+                            </div>
+                            <div class="col-4 text-center">
+                                _______________________<br/>
+                                <strong>Dept Head &amp; Registrar Approval</strong><br/>
+                                (<span t-field="doc.registrar_approver_id.name"/>)
+                            </div>
+                            <div class="col-4 text-center">
+                                _______________________<br/>
+                                <strong>Store Incharge (Issued)</strong><br/>
+                                (<span t-field="doc.store_incharge_id.name"/>)
+                            </div>
+                        </div>
+
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

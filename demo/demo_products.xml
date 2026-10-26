@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <!-- Consumable 1: Ballpoint Pens -->
+        <record id="demo_product_pen" model="product.product">
+            <field name="name">Matador Hi-School Ballpoint Pens (Box of 50 Pcs)</field>
+            <field name="categ_id" ref="product.product_category_goods"/>
+            <field name="type">consu</field>
+            <field name="is_storable">True</field>
+            <field name="institutional_item_type">consumable</field>
+            <field name="item_condition">intact</field>
+            <field name="standard_price">350.00</field>
+            <field name="list_price">450.00</field>
+        </record>
+
+        <!-- Consumable 2: A4 Paper Ream -->
+        <record id="demo_product_paper_a4" model="product.product">
+            <field name="name">Charta A4 Executive Printing Paper Ream 80GSM (500 Sheets)</field>
+            <field name="categ_id" ref="product.product_category_goods"/>
+            <field name="type">consu</field>
+            <field name="is_storable">True</field>
+            <field name="institutional_item_type">consumable</field>
+            <field name="item_condition">intact</field>
+            <field name="standard_price">580.00</field>
+            <field name="list_price">720.00</field>
+        </record>
+
+        <!-- Consumable 3: Heavy Duty Stapler & Pins -->
+        <record id="demo_product_stapler" model="product.product">
+            <field name="name">Kangaro HD-45 Heavy Duty Stapler &amp; Pins Set</field>
+            <field name="categ_id" ref="product.product_category_goods"/>
+            <field name="type">consu</field>
+            <field name="is_storable">True</field>
+            <field name="institutional_item_type">consumable</field>
+            <field name="item_condition">intact</field>
+            <field name="standard_price">850.00</field>
+            <field name="list_price">1100.00</field>
+        </record>
+
+        <!-- Consumable 4: Laser Printer Toner Cartridge -->
+        <record id="demo_product_toner" model="product.product">
+            <field name="name">HP LaserJet M404 Black Toner Cartridge (High Capacity)</field>
+            <field name="categ_id" ref="product.product_category_goods"/>
+            <field name="type">consu</field>
+            <field name="is_storable">True</field>
+            <field name="institutional_item_type">consumable</field>
+            <field name="item_condition">intact</field>
+            <field name="standard_price">9500.00</field>
+            <field name="list_price">11500.00</field>
+        </record>
+
+        <!-- Consumable 5: Wireless Optical Mouse -->
+        <record id="demo_product_mouse" model="product.product">
+            <field name="name">Logitech Wireless Optical Mouse M170</field>
+            <field name="categ_id" ref="product.product_category_goods"/>
+            <field name="type">consu</field>
+            <field name="is_storable">True</field>
+            <field name="institutional_item_type">consumable</field>
+            <field name="item_condition">intact</field>
+            <field name="standard_price">1200.00</field>
+            <field name="list_price">1500.00</field>
+        </record>
+
+        <!-- Asset 1: Dell Laptop -->
+        <record id="demo_product_laptop_dell" model="product.product">
+            <field name="name">Dell Latitude 5440 Core i7 Executive Laptop</field>
+            <field name="categ_id" ref="product.product_category_goods"/>
+            <field name="type">consu</field>
+            <field name="is_storable">True</field>
+            <field name="tracking">serial</field>
+            <field name="institutional_item_type">asset</field>
+            <field name="item_condition">intact</field>
+            <field name="standard_price">135000.00</field>
+            <field name="list_price">155000.00</field>
+        </record>
+
+        <!-- Asset 2: Lenovo ThinkPad Laptop -->
+        <record id="demo_product_laptop_thinkpad" model="product.product">
+            <field name="name">Lenovo ThinkPad X1 Carbon Ultrabook Laptop</field>
+            <field name="categ_id" ref="product.product_category_goods"/>
+            <field name="type">consu</field>
+            <field name="is_storable">True</field>
+            <field name="tracking">serial</field>
+            <field name="institutional_item_type">asset</field>
+            <field name="item_condition">intact</field>
+            <field name="standard_price">165000.00</field>
+            <field name="list_price">190000.00</field>
+        </record>
+
+        <!-- Asset 3: HP Laser Printer -->
+        <record id="demo_product_printer" model="product.product">
+            <field name="name">HP LaserJet Pro M404 Monochromatic Network Printer</field>
+            <field name="categ_id" ref="product.product_category_goods"/>
+            <field name="type">consu</field>
+            <field name="is_storable">True</field>
+            <field name="tracking">serial</field>
+            <field name="institutional_item_type">asset</field>
+            <field name="item_condition">intact</field>
+            <field name="standard_price">38000.00</field>
+            <field name="list_price">45000.00</field>
+        </record>
+
+        <!-- Asset 4: Store Steel Almirah -->
+        <record id="demo_product_almirah" model="product.product">
+            <field name="name">Heavy-Duty Steel Store Almirah (4 Security Drawers)</field>
+            <field name="categ_id" ref="product.product_category_goods"/>
+            <field name="type">consu</field>
+            <field name="is_storable">True</field>
+            <field name="tracking">serial</field>
+            <field name="institutional_item_type">asset</field>
+            <field name="item_condition">intact</field>
+            <field name="standard_price">42000.00</field>
+            <field name="list_price">50000.00</field>
+        </record>
+
+        <!-- Asset 5: Executive Leather Sofa Set -->
+        <record id="demo_product_sofa" model="product.product">
+            <field name="name">Executive Leather Sofa Set (3+1+1 Seater)</field>
+            <field name="categ_id" ref="product.product_category_goods"/>
+            <field name="type">consu</field>
+            <field name="is_storable">True</field>
+            <field name="tracking">serial</field>
+            <field name="institutional_item_type">asset</field>
+            <field name="item_condition">intact</field>
+            <field name="standard_price">85000.00</field>
+            <field name="list_price">105000.00</field>
+        </record>
+
+        <!-- Asset 6: Ergonomic Executive Chair -->
+        <record id="demo_product_chair" model="product.product">
+            <field name="name">Ergonomic High-Back Executive Mesh Chair</field>
+            <field name="categ_id" ref="product.product_category_goods"/>
+            <field name="type">consu</field>
+            <field name="is_storable">True</field>
+            <field name="tracking">serial</field>
+            <field name="institutional_item_type">asset</field>
+            <field name="item_condition">intact</field>
+            <field name="standard_price">18500.00</field>
+            <field name="list_price">22000.00</field>
+        </record>
+
+        <!-- Asset 7: DSLR Camera Kit -->
+        <record id="demo_product_camera" model="product.product">
+            <field name="name">Canon EOS 90D Microscopic DSLR Camera Kit</field>
+            <field name="categ_id" ref="product.product_category_goods"/>
+            <field name="type">consu</field>
+            <field name="is_storable">True</field>
+            <field name="tracking">serial</field>
+            <field name="institutional_item_type">asset</field>
+            <field name="item_condition">intact</field>
+            <field name="standard_price">140000.00</field>
+            <field name="list_price">165000.00</field>
+        </record>
+
+        <!-- Asset 8: CCTV & NVR System -->
+        <record id="demo_product_cctv" model="product.product">
+            <field name="name">Hikvision 4K Security CCTV System &amp; 16-Ch NVR</field>
+            <field name="categ_id" ref="product.product_category_goods"/>
+            <field name="type">consu</field>
+            <field name="is_storable">True</field>
+            <field name="tracking">serial</field>
+            <field name="institutional_item_type">asset</field>
+            <field name="item_condition">intact</field>
+            <field name="standard_price">115000.00</field>
+            <field name="list_price">135000.00</field>
+        </record>
+
+        <!-- Sub-Components for Modular Asset Composition -->
+        <record id="demo_product_comp_ram" model="product.product">
+            <field name="name">16GB DDR5 4800MHz SODIMM Laptop RAM</field>
+            <field name="categ_id" ref="product.product_category_goods"/>
+            <field name="type">consu</field>
+            <field name="is_storable">True</field>
+            <field name="institutional_item_type">consumable</field>
+            <field name="standard_price">6500.00</field>
+        </record>
+
+        <record id="demo_product_comp_charger" model="product.product">
+            <field name="name">65W USB-C Type-C Laptop Power Charger</field>
+            <field name="categ_id" ref="product.product_category_goods"/>
+            <field name="type">consu</field>
+            <field name="is_storable">True</field>
+            <field name="institutional_item_type">consumable</field>
+            <field name="standard_price">3500.00</field>
+        </record>
+
+        <record id="demo_product_comp_battery" model="product.product">
+            <field name="name">54Wh 4-Cell Smart Laptop Battery Pack</field>
+            <field name="categ_id" ref="product.product_category_goods"/>
+            <field name="type">consu</field>
+            <field name="is_storable">True</field>
+            <field name="institutional_item_type">consumable</field>
+            <field name="standard_price">5200.00</field>
+        </record>
+
+        <record id="demo_product_comp_display" model="product.product">
+            <field name="name">14" FHD IPS Anti-Glare Laptop Display Assembly</field>
+            <field name="categ_id" ref="product.product_category_goods"/>
+            <field name="type">consu</field>
+            <field name="is_storable">True</field>
+            <field name="institutional_item_type">consumable</field>
+            <field name="standard_price">12500.00</field>
+        </record>
+
+        <record id="demo_product_comp_hdd" model="product.product">
+            <field name="name">4TB Western Digital Purple Surveillance HDD</field>
+            <field name="categ_id" ref="product.product_category_goods"/>
+            <field name="type">consu</field>
+            <field name="is_storable">True</field>
+            <field name="institutional_item_type">consumable</field>
+            <field name="standard_price">14500.00</field>
+        </record>
+
+        <record id="demo_product_comp_sd_512" model="product.product">
+            <field name="name">512GB SanDisk Extreme PRO SDXC Memory Card</field>
+            <field name="categ_id" ref="product.product_category_goods"/>
+            <field name="type">consu</field>
+            <field name="is_storable">True</field>
+            <field name="institutional_item_type">consumable</field>
+            <field name="standard_price">8500.00</field>
+        </record>
+
+        <record id="demo_product_comp_sd_1tb" model="product.product">
+            <field name="name">1TB Ultra High-Speed CFexpress Memory Card</field>
+            <field name="categ_id" ref="product.product_category_goods"/>
+            <field name="type">consu</field>
+            <field name="is_storable">True</field>
+            <field name="institutional_item_type">consumable</field>
+            <field name="standard_price">24500.00</field>
+        </record>
+
+        <record id="demo_product_comp_drawer" model="product.product">
+            <field name="name">Reinforced Heavy-Duty Steel Almirah Drawer Unit</field>
+            <field name="categ_id" ref="product.product_category_goods"/>
+            <field name="type">consu</field>
+            <field name="is_storable">True</field>
+            <field name="institutional_item_type">consumable</field>
+            <field name="standard_price">4500.00</field>
+        </record>
+
+        <record id="demo_product_comp_lock" model="product.product">
+            <field name="name">Central Double-Bitted Almirah Security Lock &amp; Key Assembly</field>
+            <field name="categ_id" ref="product.product_category_goods"/>
+            <field name="type">consu</field>
+            <field name="is_storable">True</field>
+            <field name="institutional_item_type">consumable</field>
+            <field name="standard_price">2200.00</field>
+        </record>
+
+    </data>
+</odoo>

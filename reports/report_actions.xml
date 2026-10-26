@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- Printable QWeb Report: Requisition & Store Issue Slip -->
+        <record id="action_report_requisition_slip" model="ir.actions.report">
+            <field name="name">Requisition &amp; Store Issue Slip</field>
+            <field name="model">institutional.store.requisition</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">institutional_inventory_procurement.report_requisition_slip_template</field>
+            <field name="report_file">Requisition_Issue_Slip</field>
+            <field name="print_report_name">'Requisition_Slip_%s' % (object.name)</field>
+            <field name="binding_model_id" ref="model_institutional_store_requisition"/>
+            <field name="binding_type">report</field>
+        </record>
+
+        <!-- Printable QWeb Report: Asset Registry & Component History -->
+        <record id="action_report_asset_registry" model="ir.actions.report">
+            <field name="name">Asset Registry &amp; IT Swap History</field>
+            <field name="model">institutional.asset.item</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">institutional_inventory_procurement.report_asset_registry_template</field>
+            <field name="report_file">Asset_Registry_Report</field>
+            <field name="print_report_name">'Asset_Registry_%s' % (object.name)</field>
+            <field name="binding_model_id" ref="model_institutional_asset_item"/>
+            <field name="binding_type">report</field>
+        </record>
+
+        <!-- Low Stock Alert Report -->
+        <record id="action_report_low_stock" model="ir.actions.report">
+            <field name="name">Low Stock &amp; Reorder Alert Report</field>
+            <field name="model">product.template</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">institutional_inventory_procurement.report_low_stock_template</field>
+            <field name="report_file">institutional_inventory_procurement.report_low_stock_template</field>
+            <field name="print_report_name">'Low_Stock_Alert_%s' % object.name</field>
+            <field name="binding_model_id" ref="product.model_product_template"/>
+            <field name="binding_type">report</field>
+        </record>
+
+    </data>
+</odoo>

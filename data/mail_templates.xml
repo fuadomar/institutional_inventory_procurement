@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <!-- Email: Requisition Submitted for Dept Head Approval -->
+        <record id="mail_template_requisition_submitted" model="mail.template">
+            <field name="name">Requisition: Submitted for Dept Head Approval</field>
+            <field name="model_id" ref="model_institutional_store_requisition"/>
+            <field name="subject">Requisition {{ object.name }} Submitted for Your Approval</field>
+            <field name="email_from">{{ (object.requested_by_id.email or '') }}</field>
+            <field name="email_to">{{ (object.department_id.manager_id.user_id.email or '') }}</field>
+            <field name="body_html" type="html">
+                <div style="margin: 0px; padding: 0px;">
+                    <p>Dear Department Head,</p>
+                    <p>A new supply requisition <strong><t t-out="object.name or ''"/></strong> has been submitted by
+                       <strong><t t-out="object.requested_by_id.name or ''"/></strong> from <t t-out="object.department_id.name or ''"/> department
+                       and requires your approval.</p>
+                    <p><strong>Total Estimated Cost:</strong> <t t-out="object.total_estimated_cost or 0.0"/></p>
+                    <p><strong>Date:</strong> <t t-out="object.transaction_date or ''"/></p>
+                    <p>Please log in to review and approve the requisition.</p>
+                    <p>Regards,<br/>Institutional Store &amp; Procurement System</p>
+                </div>
+            </field>
+            <field name="lang">{{ object.requested_by_id.lang }}</field>
+            <field name="auto_delete" eval="True"/>
+        </record>
+
+        <!-- Email: Requisition Approved by Dept Head, Sent to Registrar -->
+        <record id="mail_template_requisition_dept_approved" model="mail.template">
+            <field name="name">Requisition: Dept Head Approved — Awaiting Registrar</field>
+            <field name="model_id" ref="model_institutional_store_requisition"/>
+            <field name="subject">Requisition {{ object.name }} Approved by Dept Head — Awaiting Your Review</field>
+            <field name="email_from">{{ (object.dept_head_approver_id.email or '') }}</field>
+            <field name="body_html" type="html">
+                <div style="margin: 0px; padding: 0px;">
+                    <p>Dear Registrar,</p>
+                    <p>Requisition <strong><t t-out="object.name or ''"/></strong> from <t t-out="object.department_id.name or ''"/> department
+                       has been approved by Department Head <strong><t t-out="object.dept_head_approver_id.name or ''"/></strong>
+                       and now requires your mandatory approval.</p>
+                    <p><strong>Total Estimated Cost:</strong> <t t-out="object.total_estimated_cost or 0.0"/></p>
+                    <p>Please log in to review the audit trail and approve.</p>
+                    <p>Regards,<br/>Institutional Store &amp; Procurement System</p>
+                </div>
+            </field>
+            <field name="auto_delete" eval="True"/>
+        </record>
+
+        <!-- Email: Requisition Rejected -->
+        <record id="mail_template_requisition_rejected" model="mail.template">
+            <field name="name">Requisition: Rejected</field>
+            <field name="model_id" ref="model_institutional_store_requisition"/>
+            <field name="subject">Requisition {{ object.name }} Has Been Rejected</field>
+            <field name="email_to">{{ (object.requested_by_id.email or '') }}</field>
+            <field name="body_html" type="html">
+                <div style="margin: 0px; padding: 0px;">
+                    <p>Dear <t t-out="object.requested_by_id.name or ''"/>,</p>
+                    <p>Your supply requisition <strong><t t-out="object.name or ''"/></strong> has been rejected.</p>
+                    <p>Please log in to view the reason and contact your Department Head or Registrar for details.</p>
+                    <p>Regards,<br/>Institutional Store &amp; Procurement System</p>
+                </div>
+            </field>
+            <field name="auto_delete" eval="True"/>
+        </record>
+
+        <!-- Email: Requisition Ready for Pickup -->
+        <record id="mail_template_requisition_ready" model="mail.template">
+            <field name="name">Requisition: Ready for Pickup at Central Store</field>
+            <field name="model_id" ref="model_institutional_store_requisition"/>
+            <field name="subject">Requisition {{ object.name }} — Ready for Pickup at Central Store</field>
+            <field name="email_to">{{ (object.requested_by_id.email or '') }}</field>
+            <field name="body_html" type="html">
+                <div style="margin: 0px; padding: 0px;">
+                    <p>Dear <t t-out="object.requested_by_id.name or ''"/>,</p>
+                    <p>Your supply requisition <strong><t t-out="object.name or ''"/></strong> has been prepared by
+                       Store Incharge <strong><t t-out="object.store_incharge_id.name or ''"/></strong> and is ready for pickup
+                       at the Central Store Office.</p>
+                    <p>Please visit the store during working hours to collect your items.</p>
+                    <p>Regards,<br/>Institutional Store &amp; Procurement System</p>
+                </div>
+            </field>
+            <field name="auto_delete" eval="True"/>
+        </record>
+
+    </data>
+</odoo>

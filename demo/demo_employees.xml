@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <!-- Executive (Vice-Chancellor Entity - Standalone) -->
+        <record id="demo_emp_vc" model="hr.employee">
+            <field name="name">Prof. Dr. Engr. Md. Zulhash Uddin</field>
+            <field name="user_id" ref="demo_user_vc"/>
+            <field name="department_id" ref="demo_dept_vc"/>
+            <field name="job_title">Vice-Chancellor (Executive Entity)</field>
+            <field name="work_email">vc@butex.edu.bd</field>
+        </record>
+
+        <record id="demo_emp_ps_vc" model="hr.employee">
+            <field name="name">Md. Ehsanul Karim</field>
+            <field name="user_id" ref="demo_user_ps_vc"/>
+            <field name="department_id" ref="demo_dept_vc"/>
+            <field name="job_title">PS to Vice-Chancellor</field>
+            <field name="work_email">ps_vc@butex.edu.bd</field>
+        </record>
+
+        <!-- Officers & Administration -->
+        <record id="demo_emp_registrar" model="hr.employee">
+            <field name="name">Md. Kabedul Islam</field>
+            <field name="user_id" ref="demo_user_registrar"/>
+            <field name="department_id" ref="demo_dept_registrar"/>
+            <field name="job_title">Head Registrar</field>
+            <field name="work_email">registrar@butex.edu.bd</field>
+        </record>
+
+        <record id="demo_emp_store_incharge" model="hr.employee">
+            <field name="name">Md. Alamgir Hossain</field>
+            <field name="user_id" ref="demo_user_store_incharge"/>
+            <field name="department_id" ref="demo_dept_store"/>
+            <field name="job_title">Central Store Incharge</field>
+            <field name="work_email">store@butex.edu.bd</field>
+        </record>
+
+        <record id="demo_emp_it_director" model="hr.employee">
+            <field name="name">Engr. Md. Moniruzzaman</field>
+            <field name="user_id" ref="demo_user_it_director"/>
+            <field name="department_id" ref="demo_dept_it"/>
+            <field name="job_title">Director, IT Cell &amp; Network Center</field>
+            <field name="work_email">it_director@butex.edu.bd</field>
+        </record>
+
+        <record id="demo_emp_net_admin" model="hr.employee">
+            <field name="name">Engr. Sharif Ahmed</field>
+            <field name="user_id" ref="demo_user_net_admin"/>
+            <field name="department_id" ref="demo_dept_it"/>
+            <field name="job_title">Network Administrator</field>
+            <field name="work_email">netadmin@butex.edu.bd</field>
+        </record>
+
+        <record id="demo_emp_deputy_controller" model="hr.employee">
+            <field name="name">Syeda Nurun Nahar</field>
+            <field name="user_id" ref="demo_user_deputy_controller"/>
+            <field name="department_id" ref="demo_dept_exam"/>
+            <field name="job_title">Deputy Controller of Examinations</field>
+            <field name="work_email">exam_deputy@butex.edu.bd</field>
+        </record>
+
+        <record id="demo_emp_finance_ad" model="hr.employee">
+            <field name="name">Mohammad Ali</field>
+            <field name="user_id" ref="demo_user_finance_ad"/>
+            <field name="department_id" ref="demo_dept_finance"/>
+            <field name="job_title">Assistant Director, Finance &amp; Accounts</field>
+            <field name="work_email">finance@butex.edu.bd</field>
+        </record>
+
+        <!-- Teachers & Faculty -->
+        <record id="demo_emp_prof_mashiur" model="hr.employee">
+            <field name="name">Prof. Dr. Engr. Md. Mashiur Rahman Khan</field>
+            <field name="user_id" ref="demo_user_prof_mashiur"/>
+            <field name="department_id" ref="demo_dept_te"/>
+            <field name="job_title">Professor &amp; Head, Textile Engineering</field>
+            <field name="work_email">mashiur@butex.edu.bd</field>
+        </record>
+
+        <record id="demo_emp_prof_ummul" model="hr.employee">
+            <field name="name">Prof. Dr. Ummul Khair Fatema</field>
+            <field name="user_id" ref="demo_user_prof_ummul"/>
+            <field name="department_id" ref="demo_dept_dce"/>
+            <field name="job_title">Professor &amp; Head, Dyes &amp; Chemicals</field>
+            <field name="work_email">ummul@butex.edu.bd</field>
+        </record>
+
+        <record id="demo_emp_head_wpe" model="hr.employee">
+            <field name="name">Dr. Md. Ahashan Habib</field>
+            <field name="user_id" ref="demo_user_head_wpe"/>
+            <field name="department_id" ref="demo_dept_wpe"/>
+            <field name="job_title">Head of Wet Process Engineering</field>
+            <field name="work_email">head_wpe@butex.edu.bd</field>
+        </record>
+
+        <record id="demo_emp_assoc_repon" model="hr.employee">
+            <field name="name">Dr. Engr. Md. Reazuddin Repon</field>
+            <field name="user_id" ref="demo_user_assoc_repon"/>
+            <field name="department_id" ref="demo_dept_wpe"/>
+            <field name="job_title">Associate Professor, Wet Process Engineering</field>
+            <field name="work_email">repon@butex.edu.bd</field>
+        </record>
+
+        <record id="demo_emp_asst_rashed" model="hr.employee">
+            <field name="name">Engr. Md. Rashedul Islam</field>
+            <field name="user_id" ref="demo_user_asst_rashed"/>
+            <field name="department_id" ref="demo_dept_ae"/>
+            <field name="job_title">Assistant Professor, Apparel Engineering</field>
+            <field name="work_email">rashed@butex.edu.bd</field>
+        </record>
+
+        <!-- 3rd Class / Support Staff -->
+        <record id="demo_emp_store_assistant" model="hr.employee">
+            <field name="name">Md. Abul Kalam</field>
+            <field name="user_id" ref="demo_user_store_assistant"/>
+            <field name="department_id" ref="demo_dept_store"/>
+            <field name="job_title">Senior Store Assistant</field>
+            <field name="work_email">kalam@butex.edu.bd</field>
+        </record>
+
+        <record id="demo_emp_office_assistant" model="hr.employee">
+            <field name="name">Md. Jahangir Alam</field>
+            <field name="user_id" ref="demo_user_office_assistant"/>
+            <field name="department_id" ref="demo_dept_registrar"/>
+            <field name="job_title">Office Assistant, Registrar Office</field>
+            <field name="work_email">jahangir@butex.edu.bd</field>
+        </record>
+
+        <record id="demo_emp_lab_tech" model="hr.employee">
+            <field name="name">Rafiqul Islam</field>
+            <field name="user_id" ref="demo_user_lab_tech"/>
+            <field name="department_id" ref="demo_dept_wpe"/>
+            <field name="job_title">Lab Technician, Wet Process Lab</field>
+            <field name="work_email">rafiq@butex.edu.bd</field>
+        </record>
+
+        <record id="demo_emp_machine_op" model="hr.employee">
+            <field name="name">Shahinur Rahman</field>
+            <field name="user_id" ref="demo_user_machine_op"/>
+            <field name="department_id" ref="demo_dept_fe"/>
+            <field name="job_title">Senior Machine Operator, Fabric Lab</field>
+            <field name="work_email">shahin@butex.edu.bd</field>
+        </record>
+
+        <!-- Set Department Managers -->
+        <record id="demo_dept_te" model="hr.department">
+            <field name="manager_id" ref="demo_emp_prof_mashiur"/>
+        </record>
+
+        <record id="demo_dept_dce" model="hr.department">
+            <field name="manager_id" ref="demo_emp_prof_ummul"/>
+        </record>
+
+        <record id="demo_dept_wpe" model="hr.department">
+            <field name="manager_id" ref="demo_emp_head_wpe"/>
+        </record>
+
+        <record id="demo_dept_registrar" model="hr.department">
+            <field name="manager_id" ref="demo_emp_registrar"/>
+        </record>
+
+        <record id="demo_dept_it" model="hr.department">
+            <field name="manager_id" ref="demo_emp_it_director"/>
+        </record>
+
+        <record id="demo_dept_store" model="hr.department">
+            <field name="manager_id" ref="demo_emp_store_incharge"/>
+        </record>
+
+    </data>
+</odoo>

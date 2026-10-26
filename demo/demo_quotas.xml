@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- Department Quota Allocations for FY 2026 -->
+
+        <!-- Department of Fabric Engineering (FE) -->
+        <record id="quota_fe_paper" model="institutional.department.quota">
+            <field name="department_id" ref="demo_dept_fe"/>
+            <field name="product_id" ref="demo_product_paper_a4"/>
+            <field name="fiscal_year">2026</field>
+            <field name="allocated_qty">300.0</field>
+            <field name="notes">Annual paper quota for FE examination printing &amp; administrative papers.</field>
+        </record>
+
+        <record id="quota_fe_toner" model="institutional.department.quota">
+            <field name="department_id" ref="demo_dept_fe"/>
+            <field name="product_id" ref="demo_product_toner"/>
+            <field name="fiscal_year">2026</field>
+            <field name="allocated_qty">15.0</field>
+            <field name="notes">Annual quota for FE laser printer cartridges.</field>
+        </record>
+
+        <record id="quota_fe_laptop" model="institutional.department.quota">
+            <field name="department_id" ref="demo_dept_fe"/>
+            <field name="product_id" ref="demo_product_laptop_dell"/>
+            <field name="fiscal_year">2026</field>
+            <field name="allocated_qty">5.0</field>
+            <field name="notes">Annual allocation for FE faculty workstations &amp; research laptops.</field>
+        </record>
+
+        <!-- Department of Wet Process Engineering (WPE) -->
+        <record id="quota_wpe_paper" model="institutional.department.quota">
+            <field name="department_id" ref="demo_dept_wpe"/>
+            <field name="product_id" ref="demo_product_paper_a4"/>
+            <field name="fiscal_year">2026</field>
+            <field name="allocated_qty">250.0</field>
+            <field name="notes">Annual paper quota for WPE lab reports &amp; student assignments.</field>
+        </record>
+
+        <record id="quota_wpe_toner" model="institutional.department.quota">
+            <field name="department_id" ref="demo_dept_wpe"/>
+            <field name="product_id" ref="demo_product_toner"/>
+            <field name="fiscal_year">2026</field>
+            <field name="allocated_qty">12.0</field>
+            <field name="notes">Annual toner quota for WPE departmental printers.</field>
+        </record>
+
+        <record id="quota_wpe_laptop" model="institutional.department.quota">
+            <field name="department_id" ref="demo_dept_wpe"/>
+            <field name="product_id" ref="demo_product_laptop_dell"/>
+            <field name="fiscal_year">2026</field>
+            <field name="allocated_qty">4.0</field>
+            <field name="notes">Annual laptop allocation for WPE research lab.</field>
+        </record>
+
+        <!-- Department of Computer Science & Engineering (CSE) -->
+        <record id="quota_cse_paper" model="institutional.department.quota">
+            <field name="department_id" ref="demo_dept_it"/>
+            <field name="product_id" ref="demo_product_paper_a4"/>
+            <field name="fiscal_year">2026</field>
+            <field name="allocated_qty">200.0</field>
+            <field name="notes">Annual paper quota for IT &amp; CSE computing lab &amp; exams.</field>
+        </record>
+
+        <record id="quota_cse_ram" model="institutional.department.quota">
+            <field name="department_id" ref="demo_dept_it"/>
+            <field name="product_id" ref="demo_product_comp_ram"/>
+            <field name="fiscal_year">2026</field>
+            <field name="allocated_qty">20.0</field>
+            <field name="notes">Annual RAM upgrade quota for IT computing lab PCs.</field>
+        </record>
+
+        <!-- Registrar Office -->
+        <record id="quota_reg_paper" model="institutional.department.quota">
+            <field name="department_id" ref="demo_dept_registrar"/>
+            <field name="product_id" ref="demo_product_paper_a4"/>
+            <field name="fiscal_year">2026</field>
+            <field name="allocated_qty">500.0</field>
+            <field name="notes">Registrar Central Administrative Office annual paper quota.</field>
+        </record>
+
+        <record id="quota_reg_toner" model="institutional.department.quota">
+            <field name="department_id" ref="demo_dept_registrar"/>
+            <field name="product_id" ref="demo_product_toner"/>
+            <field name="fiscal_year">2026</field>
+            <field name="allocated_qty">30.0</field>
+            <field name="notes">Registrar Office high-volume printing cartridges.</field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- Executive Asset Graph View -->
+        <record id="view_executive_asset_graph" model="ir.ui.view">
+            <field name="name">institutional.asset.item.executive.graph</field>
+            <field name="model">institutional.asset.item</field>
+            <field name="arch" type="xml">
+                <graph string="Executive Asset Valuation by Department &amp; Condition" type="bar" sample="1">
+                    <field name="department_id"/>
+                    <field name="condition"/>
+                    <field name="asset_value" type="measure"/>
+                </graph>
+            </field>
+        </record>
+
+        <!-- Executive Asset Pivot View -->
+        <record id="view_executive_asset_pivot" model="ir.ui.view">
+            <field name="name">institutional.asset.item.executive.pivot</field>
+            <field name="model">institutional.asset.item</field>
+            <field name="arch" type="xml">
+                <pivot string="Executive Asset Holdings Matrix (BDT ৳)" sample="1">
+                    <field name="department_id" type="row"/>
+                    <field name="assigned_user_id" type="row"/>
+                    <field name="status" type="col"/>
+                    <field name="asset_value" type="measure"/>
+                </pivot>
+            </field>
+        </record>
+
+        <!-- Requisition Graph View -->
+        <record id="view_store_requisition_graph" model="ir.ui.view">
+            <field name="name">institutional.store.requisition.graph</field>
+            <field name="model">institutional.store.requisition</field>
+            <field name="arch" type="xml">
+                <graph string="Requisitions by Department &amp; Status" type="bar" sample="1">
+                    <field name="department_id"/>
+                    <field name="state"/>
+                    <field name="total_estimated_cost" type="measure"/>
+                </graph>
+            </field>
+        </record>
+
+        <!-- Requisition Pivot View -->
+        <record id="view_store_requisition_pivot" model="ir.ui.view">
+            <field name="name">institutional.store.requisition.pivot</field>
+            <field name="model">institutional.store.requisition</field>
+            <field name="arch" type="xml">
+                <pivot string="Requisition Analytics Matrix" sample="1">
+                    <field name="department_id" type="row"/>
+                    <field name="state" type="col"/>
+                    <field name="total_estimated_cost" type="measure"/>
+                </pivot>
+            </field>
+        </record>
+
+        <!-- Asset Item Graph View -->
+        <record id="view_asset_item_graph" model="ir.ui.view">
+            <field name="name">institutional.asset.item.graph</field>
+            <field name="model">institutional.asset.item</field>
+            <field name="arch" type="xml">
+                <graph string="Asset Valuation &amp; Condition Breakdown" type="pie" sample="1">
+                    <field name="condition"/>
+                    <field name="asset_value" type="measure"/>
+                </graph>
+            </field>
+        </record>
+
+        <!-- Asset Item Pivot View -->
+        <record id="view_asset_item_pivot" model="ir.ui.view">
+            <field name="name">institutional.asset.item.pivot</field>
+            <field name="model">institutional.asset.item</field>
+            <field name="arch" type="xml">
+                <pivot string="Asset Holdings Matrix by Person &amp; Department" sample="1">
+                    <field name="department_id" type="row"/>
+                    <field name="assigned_user_id" type="row"/>
+                    <field name="status" type="col"/>
+                    <field name="asset_value" type="measure"/>
+                </pivot>
+            </field>
+        </record>
+
+        <!-- Requisition Line Kanban View (Personnel Holdings & Consumption) -->
+        <record id="view_requisition_line_kanban" model="ir.ui.view">
+            <field name="name">institutional.store.requisition.line.kanban</field>
+            <field name="model">institutional.store.requisition.line</field>
+            <field name="arch" type="xml">
+                <kanban default_group_by="department_id" class="o_kanban_small_column" sample="1">
+                    <field name="id"/>
+                    <field name="department_id"/>
+                    <field name="requested_by_id"/>
+                    <field name="product_id"/>
+                    <field name="institutional_item_type"/>
+                    <field name="requested_qty"/>
+                    <field name="approved_qty"/>
+                    <field name="issued_qty"/>
+                    <field name="item_condition"/>
+                    <field name="unit_price"/>
+                    <field name="subtotal_cost"/>
+                    <field name="currency_id"/>
+                    <field name="state"/>
+                    <templates>
+                        <t t-name="card">
+                            <div class="d-flex flex-column justify-content-between p-2">
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <field name="product_id" class="fw-bold fs-6 text-primary"/>
+                                    <field name="institutional_item_type"/>
+                                </div>
+                                <div class="my-2">
+                                    <div class="row text-center bg-light rounded p-2 border ms-0 me-0">
+                                        <div class="col-6">
+                                            <small class="text-muted d-block">Qty Consumed</small>
+                                            <strong class="fs-5 text-success">
+                                                <field name="issued_qty"/> units
+                                            </strong>
+                                        </div>
+                                        <div class="col-6 border-start">
+                                            <small class="text-muted d-block">Total Value</small>
+                                            <strong class="fs-5 text-primary">
+                                                <field name="subtotal_cost" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                                            </strong>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center mt-2 text-muted small">
+                                    <span>
+                                        Taken By: <field name="requested_by_id" class="fw-bold text-dark"/>
+                                    </span>
+                                    <span>
+                                        Dept: <field name="department_id" class="fw-bold text-dark"/>
+                                    </span>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <!-- Requisition Line Pivot View -->
+        <record id="view_requisition_line_pivot" model="ir.ui.view">
+            <field name="name">institutional.store.requisition.line.pivot</field>
+            <field name="model">institutional.store.requisition.line</field>
+            <field name="arch" type="xml">
+                <pivot string="Personnel Consumables &amp; Supplies Consumption Matrix" sample="1">
+                    <field name="department_id" type="row"/>
+                    <field name="requested_by_id" type="row"/>
+                    <field name="product_id" type="col"/>
+                    <field name="approved_qty" type="measure"/>
+                    <field name="issued_qty" type="measure"/>
+                    <field name="subtotal_cost" type="measure"/>
+                </pivot>
+            </field>
+        </record>
+
+        <!-- Requisition Line Tree View -->
+        <record id="view_requisition_line_tree" model="ir.ui.view">
+            <field name="name">institutional.store.requisition.line.tree</field>
+            <field name="model">institutional.store.requisition.line</field>
+            <field name="arch" type="xml">
+                <list string="Personnel Consumable Products Log (What Taken / Consumed)">
+                    <field name="currency_id" column_invisible="1"/>
+                    <field name="requested_by_id" string="Taken / Consumed By"/>
+                    <field name="department_id"/>
+                    <field name="requisition_id"/>
+                    <field name="product_id"/>
+                    <field name="requested_qty"/>
+                    <field name="approved_qty"/>
+                    <field name="issued_qty" string="Qty Consumed"/>
+                    <field name="unit_price" widget="monetary"/>
+                    <field name="subtotal_cost" widget="monetary" sum="Total Value"/>
+                    <field name="state" widget="badge"/>
+                </list>
+            </field>
+        </record>
+
+        <!-- Requisition Line Search View -->
+        <record id="view_requisition_line_search" model="ir.ui.view">
+            <field name="name">institutional.store.requisition.line.search</field>
+            <field name="model">institutional.store.requisition.line</field>
+            <field name="arch" type="xml">
+                <search string="Search Personnel Consumptions">
+                    <field name="requested_by_id"/>
+                    <field name="department_id"/>
+                    <field name="product_id"/>
+                    <field name="requisition_id"/>
+                    <filter string="Fulfilled / Done" name="filter_done" domain="[('state', '=', 'done')]"/>
+                    <group>
+                        <filter string="Person / Consumed By" name="group_person" context="{'group_by': 'requested_by_id'}"/>
+                        <filter string="Department" name="group_department" context="{'group_by': 'department_id'}"/>
+                        <filter string="Product / Item" name="group_product" context="{'group_by': 'product_id'}"/>
+                        <filter string="Status" name="group_state" context="{'group_by': 'state'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <!-- Executive Dashboard Action -->
+        <record id="action_executive_dashboard" model="ir.actions.act_window">
+            <field name="name">Executive Dashboard</field>
+            <field name="res_model">institutional.asset.item</field>
+            <field name="view_mode">graph,pivot,kanban,list</field>
+            <field name="search_view_id" ref="institutional_inventory_procurement.view_asset_item_search"/>
+            <field name="context">{'search_default_group_dept': 1}</field>
+            <field name="view_id" ref="view_executive_asset_graph"/>
+        </record>
+
+        <!-- Report Actions -->
+        <record id="action_report_requisition_analytics" model="ir.actions.act_window">
+            <field name="name">Requisition Analytics</field>
+            <field name="res_model">institutional.store.requisition</field>
+            <field name="view_mode">graph,pivot,list</field>
+            <field name="search_view_id" ref="institutional_inventory_procurement.view_store_requisition_search"/>
+            <field name="context">{'search_default_group_dept': 1}</field>
+        </record>
+
+        <record id="action_report_issued_items_dept" model="ir.actions.act_window">
+            <field name="name">Personnel Holdings &amp; Consumed Summary</field>
+            <field name="res_model">institutional.store.requisition.line</field>
+            <field name="view_mode">kanban,pivot,list</field>
+            <field name="domain">[('state', '=', 'done')]</field>
+            <field name="search_view_id" ref="view_requisition_line_search"/>
+            <field name="context">{'search_default_group_person': 1}</field>
+        </record>
+
+        <record id="action_report_asset_analytics" model="ir.actions.act_window">
+            <field name="name">Asset Valuation &amp; Condition Analytics</field>
+            <field name="res_model">institutional.asset.item</field>
+            <field name="view_mode">graph,pivot,list</field>
+            <field name="search_view_id" ref="institutional_inventory_procurement.view_asset_item_search"/>
+            <field name="context">{'search_default_group_dept': 1}</field>
+        </record>
+
+        <!-- Reporting & Dashboard Menu Items -->
+        <menuitem id="menu_executive_dashboard_root"
+                  name="Executive Dashboard"
+                  parent="menu_institutional_root"
+                  action="action_executive_dashboard"
+                  sequence="40"/>
+
+        <menuitem id="menu_report_requisitions"
+                  name="Requisition Analytics"
+                  parent="menu_reporting_category"
+                  action="action_report_requisition_analytics"
+                  sequence="10"/>
+
+        <menuitem id="menu_report_pipeline_matrix"
+                  name="Product Pipeline Stage Matrix"
+                  parent="menu_reporting_category"
+                  action="institutional_inventory_procurement.action_requisition_stage_matrix"
+                  sequence="12"/>
+
+        <menuitem id="menu_report_issued_items"
+                  name="Personnel Holdings &amp; Consumed Log"
+                  parent="menu_reporting_category"
+                  action="action_report_issued_items_dept"
+                  sequence="15"/>
+
+        <menuitem id="menu_report_shortfall_analysis"
+                  name="Procurement Shortfall &amp; Reorder Analytics"
+                  parent="menu_reporting_category"
+                  action="action_procurement_shortfall_analysis"
+                  sequence="20"/>
+
+        <menuitem id="menu_report_assets"
+                  name="Asset Valuation &amp; Conditions"
+                  parent="menu_reporting_category"
+                  action="action_report_asset_analytics"
+                  sequence="30"/>
+
+    </data>
+</odoo>

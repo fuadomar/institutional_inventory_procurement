@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- Server Action for Combining Selected Annual Requisitions -->
+        <record id="action_server_combine_requisitions" model="ir.actions.server">
+            <field name="name">Combine Selected Annual Requisitions</field>
+            <field name="model_id" ref="model_institutional_store_requisition"/>
+            <field name="binding_model_id" ref="model_institutional_store_requisition"/>
+            <field name="binding_view_types">list</field>
+            <field name="state">code</field>
+            <field name="code">
+                action = records.action_combine_annual_requisitions()
+            </field>
+        </record>
+
+        <!-- Requisition Form View -->
+        <record id="view_store_requisition_form" model="ir.ui.view">
+            <field name="name">institutional.store.requisition.form</field>
+            <field name="model">institutional.store.requisition</field>
+            <field name="arch" type="xml">
+                <form string="Store Requisition (Demand List)">
+                    <header>
+                        <button name="action_submit" string="Submit Request" type="object" class="btn-primary" invisible="state != 'draft'"/>
+                        <button name="action_dept_approve" string="Dept Head Approve" type="object" class="btn-primary" groups="institutional_inventory_procurement.group_institutional_dept_head" invisible="state != 'submitted'"/>
+                        <button name="action_registrar_approve" string="Registrar Mandatory Approve" type="object" class="btn-success" groups="institutional_inventory_procurement.group_institutional_registrar" invisible="state != 'dept_approved'"/>
+                        <button name="action_mark_ready_issue" string="Prepare Store Issue" type="object" class="btn-info" groups="institutional_inventory_procurement.group_institutional_store_incharge" invisible="state != 'registrar_approved' or demand_type in ('annual_baseline', 'dept_supplementary') or is_annual_requisition"/>
+                        <button name="action_issue_stock" string="Fulfill &amp; Issue Stock" type="object" class="btn-primary" groups="institutional_inventory_procurement.group_institutional_store_incharge" invisible="state != 'ready_for_issue' or demand_type in ('annual_baseline', 'dept_supplementary') or is_annual_requisition"/>
+                        <button name="action_create_purchase_order" string="Create Purchase Order" type="object" class="btn-warning" groups="institutional_inventory_procurement.group_institutional_procurement_head" invisible="state in ('done', 'cancelled', 'rejected')"/>
+                        <button name="action_cancel" string="Cancel Requisition" type="object" class="btn-secondary" invisible="state in ('done', 'cancelled')"/>
+                        <button name="action_reject" string="Reject" type="object" class="btn-danger" groups="institutional_inventory_procurement.group_institutional_dept_head" invisible="state not in ('submitted', 'dept_approved')"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,submitted,dept_approved,registrar_approved,in_procurement,ready_for_issue,done"/>
+                    </header>
+                    <sheet>
+                        <!-- Visual Badges & Ribbon -->
+                        <widget name="web_ribbon" title="Master Combined" bg_color="text-bg-success" invisible="not is_combined_master"/>
+                        <widget name="web_ribbon" title="Annual Baseline" bg_color="text-bg-info" invisible="not is_annual_requisition or is_combined_master"/>
+                        
+                        <div class="oe_button_box" name="button_box">
+                            <button name="action_view_picking"
+                                     type="object"
+                                     class="oe_stat_button"
+                                     icon="fa-truck"
+                                     invisible="picking_count == 0">
+                                <field name="picking_count" widget="statinfo" string="Stock Transfer"/>
+                            </button>
+                        </div>
+
+                        <div class="oe_title">
+                            <label for="name" string="Requisition Reference"/>
+                            <h1>
+                                <field name="name" readonly="1"/>
+                            </h1>
+                        </div>
+
+                        <!-- Stock Shortfall Visual Warning Banner -->
+                        <div class="alert alert-warning mb-3" role="alert" invisible="not has_stock_shortfall">
+                            <field name="stock_warning_summary" readonly="1"/>
+                        </div>
+                        <div class="alert alert-success mb-3" role="alert" invisible="has_stock_shortfall">
+                            <field name="stock_warning_summary" readonly="1"/>
+                        </div>
+
+                        <group>
+                            <group string="Requester &amp; Department Details">
+                                <field name="requested_by_id" readonly="state != 'draft'"/>
+                                <field name="department_id" readonly="state != 'draft'"/>
+                                <field name="demand_type" widget="radio" options="{'horizontal': true}" readonly="state != 'draft'"/>
+                                <field name="is_annual_requisition" widget="boolean_toggle" readonly="state != 'draft'"/>
+                                <field name="is_combined_master" widget="boolean_toggle" readonly="1"/>
+                            </group>
+                            <group string="Transaction &amp; Governance Info">
+                                <field name="transaction_date" readonly="state != 'draft'"/>
+                                <field name="actual_create_date"/>
+                                <field name="is_backdated" widget="boolean_toggle" readonly="1"/>
+                                <field name="dept_head_approver_id" readonly="1" force_save="1"/>
+                                <field name="registrar_approver_id" readonly="1" force_save="1"/>
+                                <field name="store_incharge_id" readonly="1" force_save="1"/>
+                            </group>
+                        </group>
+
+                        <notebook>
+                            <page string="Requested Item Lines">
+                                <field name="line_ids" readonly="state in ('done', 'cancelled')">
+                                    <list editable="bottom" decoration-warning="has_stock_warning">
+                                        <field name="currency_id" column_invisible="1"/>
+                                        <field name="product_id"/>
+                                        <field name="institutional_item_type"/>
+                                        <field name="requested_qty"/>
+                                        <field name="approved_qty" string="Approved Qty (Store Edit)"/>
+                                        <field name="stock_available_qty" string="Central Stock"/>
+                                        <field name="stock_warning_note" string="Stock Warning Note"/>
+                                        <field name="dept_quota_warning" string="Dept Quota Status"/>
+                                        <field name="item_condition"/>
+                                        <field name="unit_price" widget="monetary"/>
+                                        <field name="subtotal_cost" widget="monetary" sum="Total Cost"/>
+                                        <button name="action_send_to_procurement" 
+                                                string="Send to Procurement" 
+                                                type="object" 
+                                                icon="fa-shopping-cart" 
+                                                class="btn-sm btn-outline-warning"
+                                                invisible="not has_stock_warning"/>
+                                        <field name="has_stock_warning" column_invisible="1"/>
+                                        <field name="asset_item_ids" widget="many2many_tags" domain="[('product_id', '=', product_id), ('status', '=', 'available')]"/>
+                                        <field name="qty_modified" widget="boolean_toggle" readonly="1"/>
+                                        <field name="edit_reason" placeholder="Reason / Breakdown if edited"/>
+                                    </list>
+                                </field>
+                                <group class="oe_subtotal_footer oe_right">
+                                    <field name="currency_id" invisible="1"/>
+                                    <field name="total_estimated_cost" widget="monetary"/>
+                                </group>
+                            </page>
+                            <page string="Combined Source Requisitions" invisible="not is_combined_master">
+                                <field name="combined_source_requisition_ids" readonly="1">
+                                    <list>
+                                        <field name="name"/>
+                                        <field name="department_id"/>
+                                        <field name="requested_by_id"/>
+                                        <field name="transaction_date"/>
+                                        <field name="total_estimated_cost" widget="monetary"/>
+                                        <field name="state" widget="badge"/>
+                                    </list>
+                                </field>
+                            </page>
+                            <page string="Registrar Audit Trail (Quantity Edits &amp; Backdates)" name="audit_trail">
+                                <field name="audit_ids" readonly="1">
+                                    <list>
+                                        <field name="modified_date"/>
+                                        <field name="modified_by_id"/>
+                                        <field name="audit_type"/>
+                                        <field name="product_id"/>
+                                        <field name="original_qty"/>
+                                        <field name="new_qty"/>
+                                        <field name="reason"/>
+                                    </list>
+                                </field>
+                            </page>
+                            <page string="Purpose &amp; Notes">
+                                <field name="notes" placeholder="Detailed purpose or institutional demand justification..."/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <chatter/>
+                </form>
+            </field>
+        </record>
+
+        <!-- Requisition Tree View -->
+        <record id="view_store_requisition_tree" model="ir.ui.view">
+            <field name="name">institutional.store.requisition.tree</field>
+            <field name="model">institutional.store.requisition</field>
+            <field name="arch" type="xml">
+                <list string="Store Requisitions" decoration-info="is_annual_requisition" decoration-success="is_combined_master">
+                    <field name="currency_id" column_invisible="1"/>
+                    <field name="name"/>
+                    <field name="transaction_date"/>
+                    <field name="requested_by_id"/>
+                    <field name="department_id"/>
+                    <field name="is_annual_requisition" widget="boolean_toggle"/>
+                    <field name="is_combined_master" widget="boolean_toggle"/>
+                    <field name="has_stock_shortfall" widget="boolean_toggle" string="Shortfall"/>
+                    <field name="total_estimated_cost" widget="monetary" sum="Total Requisition Cost"/>
+                    <field name="is_backdated" widget="boolean_toggle"/>
+                    <field name="state" widget="badge" decoration-info="state == 'submitted'" decoration-warning="state in ('dept_approved', 'registrar_approved')" decoration-success="state == 'done'" decoration-danger="state == 'rejected'" decoration-muted="state == 'cancelled'"/>
+                </list>
+            </field>
+        </record>
+
+        <!-- Search View for Requisitions -->
+        <record id="view_store_requisition_search" model="ir.ui.view">
+            <field name="name">institutional.store.requisition.search</field>
+            <field name="model">institutional.store.requisition</field>
+            <field name="arch" type="xml">
+                <search string="Search Requisitions">
+                    <field name="name"/>
+                    <field name="requested_by_id"/>
+                    <field name="department_id"/>
+                    <separator/>
+                    <filter string="Annual Beginning-of-Year" name="filter_annual" domain="[('is_annual_requisition', '=', True)]"/>
+                    <filter string="Master Combined Requisitions" name="filter_combined" domain="[('is_combined_master', '=', True)]"/>
+                    <filter string="Stock Shortfall Requisitions" name="filter_shortfall" domain="[('has_stock_shortfall', '=', True)]"/>
+                    <filter string="Backdated Requests" name="filter_backdated" domain="[('is_backdated', '=', True)]"/>
+                    <filter string="Approved / Pending Issue" name="filter_approved" domain="[('state', 'in', ('registrar_approved', 'ready_for_issue'))]"/>
+                    <filter string="Fulfilled / Done" name="filter_done" domain="[('state', '=', 'done')]"/>
+                    <separator/>
+                    <group>
+                        <filter string="Department" name="group_dept" context="{'group_by': 'department_id'}"/>
+                        <filter string="Requester" name="group_requested_by" context="{'group_by': 'requested_by_id'}"/>
+                        <filter string="Status" name="group_state" context="{'group_by': 'state'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <!-- Action for All Requisitions -->
+        <record id="action_store_requisitions" model="ir.actions.act_window">
+            <field name="name">All Store Requisitions</field>
+            <field name="res_model">institutional.store.requisition</field>
+            <field name="view_mode">list,kanban,form</field>
+            <field name="search_view_id" ref="view_store_requisition_search"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create institutional supply demand list / requisition.
+                </p>
+            </field>
+        </record>
+
+        <!-- Action for Annual Beginning-of-Year Requisitions -->
+        <record id="action_annual_requisitions" model="ir.actions.act_window">
+            <field name="name">Annual Beginning-of-Year Requisitions</field>
+            <field name="res_model">institutional.store.requisition</field>
+            <field name="view_mode">list,kanban,form</field>
+
+            <field name="domain">[('is_annual_requisition', '=', True)]</field>
+            <field name="context">{'default_is_annual_requisition': True}</field>
+            <field name="search_view_id" ref="view_store_requisition_search"/>
+        </record>
+
+        <!-- Requisition Audit Log List View -->
+        <record id="view_requisition_audit_tree" model="ir.ui.view">
+            <field name="name">institutional.requisition.audit.tree</field>
+            <field name="model">institutional.requisition.audit</field>
+            <field name="arch" type="xml">
+                <list string="Registrar Requisition Audit Logs" create="false" edit="false" delete="false">
+                    <field name="modified_date"/>
+                    <field name="requisition_id"/>
+                    <field name="modified_by_id"/>
+                    <field name="audit_type" widget="badge"/>
+                    <field name="product_id"/>
+                    <field name="original_qty"/>
+                    <field name="new_qty"/>
+                    <field name="reason"/>
+                </list>
+            </field>
+        </record>
+
+        <!-- Action for Requisition Audit Logs -->
+        <record id="action_requisition_audit_logs" model="ir.actions.act_window">
+            <field name="name">Registrar Requisition Audit Logs</field>
+            <field name="res_model">institutional.requisition.audit</field>
+            <field name="view_mode">list,form</field>
+            <field name="view_id" ref="view_requisition_audit_tree"/>
+        </record>
+
+        <!-- Menu Items -->
+        <menuitem id="menu_store_requisitions_all"
+                  name="All Store Requisitions"
+                  parent="menu_requisitions_category"
+                  action="action_store_requisitions"
+                  sequence="10"/>
+
+        <menuitem id="menu_annual_requisitions_combined"
+                  name="Annual Baseline Requisitions"
+                  parent="menu_requisitions_category"
+                  action="action_annual_requisitions"
+                  sequence="15"/>
+
+        <menuitem id="menu_department_quota_allocations"
+                  name="Department Annual Quotas"
+                  parent="menu_requisitions_category"
+                  action="institutional_inventory_procurement.action_department_quota"
+                  sequence="18"/>
+
+        <menuitem id="menu_requisition_audit_trail"
+                  name="Registrar Audit Logs"
+                  parent="menu_requisitions_category"
+                  action="action_requisition_audit_logs"
+                  sequence="20"/>
+
+        <menuitem id="menu_shortfall_items_to_order"
+                  name="Shortfall Items to Order"
+                  parent="menu_requisitions_category"
+                  action="institutional_inventory_procurement.action_procurement_shortfall_analysis"
+                  sequence="25"/>
+
+    </data>
+</odoo>

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <!-- Security Category -->
+        <record id="module_category_institutional_inventory" model="ir.module.category">
+            <field name="name">Institutional Inventory and Procurement</field>
+            <field name="description">Manage institutional requisitions, budget allocations, store operations, and IT asset tracking.</field>
+            <field name="sequence">20</field>
+        </record>
+
+        <!-- Security Privileges -->
+        <record id="privilege_institutional_requisition" model="res.groups.privilege">
+            <field name="name">Requisition and Approval Access</field>
+            <field name="category_id" ref="module_category_institutional_inventory"/>
+            <field name="sequence">10</field>
+        </record>
+
+        <record id="privilege_institutional_store" model="res.groups.privilege">
+            <field name="name">Store Operations</field>
+            <field name="category_id" ref="module_category_institutional_inventory"/>
+            <field name="sequence">20</field>
+        </record>
+
+        <record id="privilege_institutional_procurement" model="res.groups.privilege">
+            <field name="name">Procurement Operations</field>
+            <field name="category_id" ref="module_category_institutional_inventory"/>
+            <field name="sequence">30</field>
+        </record>
+
+        <!-- Group: Normal User (Teacher / Officer / 3rd Class Officer) -->
+        <record id="group_institutional_user" model="res.groups">
+            <field name="name">Normal User (Teacher / Officer)</field>
+            <field name="privilege_id" ref="privilege_institutional_requisition"/>
+            <field name="sequence">10</field>
+            <field name="implied_ids" eval="[(4, ref('base.group_user')), (4, ref('hr.group_hr_user'))]"/>
+            <field name="comment">Can raise requisitions, view personal requests, and receive products.</field>
+        </record>
+
+        <!-- Group: Department Head -->
+        <record id="group_institutional_dept_head" model="res.groups">
+            <field name="name">Department Head</field>
+            <field name="privilege_id" ref="privilege_institutional_requisition"/>
+            <field name="sequence">20</field>
+            <field name="implied_ids" eval="[(4, ref('group_institutional_user'))]"/>
+            <field name="comment">Approves department requisitions and views own department budget allocations.</field>
+        </record>
+
+        <!-- Group: Store Incharge -->
+        <record id="group_institutional_store_incharge" model="res.groups">
+            <field name="name">Store Incharge</field>
+            <field name="privilege_id" ref="privilege_institutional_store"/>
+            <field name="sequence">10</field>
+            <field name="implied_ids" eval="[(4, ref('group_institutional_user')), (4, ref('stock.group_stock_user'))]"/>
+            <field name="comment">Receives stock, modifies requisition quantities with audit logs, and handles stock fulfillment.</field>
+        </record>
+
+        <!-- Group: Procurement Head / Director of Planning -->
+        <record id="group_institutional_procurement_head" model="res.groups">
+            <field name="name">Procurement Head / Director of Planning</field>
+            <field name="privilege_id" ref="privilege_institutional_procurement"/>
+            <field name="sequence">10</field>
+            <field name="implied_ids" eval="[(4, ref('group_institutional_user'))]"/>
+            <field name="comment">Oversees procurement orders and stock replenishment based on requisitions.</field>
+        </record>
+
+        <!-- Group: Registrar -->
+        <record id="group_institutional_registrar" model="res.groups">
+            <field name="name">Registrar</field>
+            <field name="privilege_id" ref="privilege_institutional_requisition"/>
+            <field name="sequence">30</field>
+            <field name="implied_ids" eval="[(4, ref('group_institutional_dept_head'))]"/>
+            <field name="comment">Mandatory final approver for requisitions, sets department budget allocations, and inspects quantity audit logs.</field>
+        </record>
+
+        <!-- Group: Store Admin / Higher Officials -->
+        <record id="group_institutional_admin" model="res.groups">
+            <field name="name">Store Admin / Higher Officials</field>
+            <field name="privilege_id" ref="privilege_institutional_requisition"/>
+            <field name="sequence">40</field>
+            <field name="implied_ids" eval="[(4, ref('group_institutional_registrar')), (4, ref('group_institutional_store_incharge')), (4, ref('group_institutional_procurement_head'))]"/>
+            <field name="comment">Full system access, budget overviews, financial reports, and system configuration.</field>
+        </record>
+
+    </data>
+</odoo>

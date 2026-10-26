@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Pipeline Stage Matrix List/Tree View -->
+    <record id="view_requisition_stage_matrix_tree" model="ir.ui.view">
+        <field name="name">institutional.requisition.stage.matrix.tree</field>
+        <field name="model">institutional.requisition.stage.matrix</field>
+        <field name="arch" type="xml">
+            <list string="Product Pipeline Stage Quantity Matrix" create="false" edit="false" delete="false">
+                <field name="product_id"/>
+                <field name="department_id"/>
+                <field name="category_id"/>
+                <field name="on_hand_qty" string="Store Stock On Hand"/>
+                <field name="total_requested_qty" sum="Total Requested"/>
+                <field name="draft_qty" sum="Total Draft"/>
+                <field name="dept_pending_qty" sum="Total Dept Pending"/>
+                <field name="registrar_pending_qty" sum="Total Registrar Pending"/>
+                <field name="ready_qty" sum="Total Ready"/>
+                <field name="issued_qty" sum="Total Issued"/>
+                <field name="shortfall_qty" sum="Total Shortfall" decoration-danger="shortfall_qty &gt; 0"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Pipeline Stage Matrix Pivot View -->
+    <record id="view_requisition_stage_matrix_pivot" model="ir.ui.view">
+        <field name="name">institutional.requisition.stage.matrix.pivot</field>
+        <field name="model">institutional.requisition.stage.matrix</field>
+        <field name="arch" type="xml">
+            <pivot string="Product Pipeline Matrix Analysis">
+                <field name="department_id" type="row"/>
+                <field name="product_id" type="row"/>
+                <field name="total_requested_qty" type="measure"/>
+                <field name="dept_pending_qty" type="measure"/>
+                <field name="registrar_pending_qty" type="measure"/>
+                <field name="ready_qty" type="measure"/>
+                <field name="issued_qty" type="measure"/>
+                <field name="shortfall_qty" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <!-- Pipeline Stage Matrix Search View -->
+    <record id="view_requisition_stage_matrix_search" model="ir.ui.view">
+        <field name="name">institutional.requisition.stage.matrix.search</field>
+        <field name="model">institutional.requisition.stage.matrix</field>
+        <field name="arch" type="xml">
+            <search string="Search Pipeline Matrix">
+                <field name="product_id"/>
+                <field name="department_id"/>
+                <field name="category_id"/>
+                <filter string="Has Shortfall Demand" name="has_shortfall" domain="[('shortfall_qty', '&gt;', 0)]"/>
+                <filter string="Pending Registrar Approval" name="pending_registrar" domain="[('registrar_pending_qty', '&gt;', 0)]"/>
+                <separator/>
+                <filter string="Group by Department" name="groupby_department" context="{'group_by': 'department_id'}"/>
+                <filter string="Group by Category" name="groupby_category" context="{'group_by': 'category_id'}"/>
+                <filter string="Group by Product" name="groupby_product" context="{'group_by': 'product_id'}"/>
+            </search>
+        </field>
+    </record>
+
+    <!-- Action for Pipeline Stage Matrix -->
+    <record id="action_requisition_stage_matrix" model="ir.actions.act_window">
+        <field name="name">Product Pipeline Stage Quantity Matrix</field>
+        <field name="res_model">institutional.requisition.stage.matrix</field>
+        <field name="view_mode">list,pivot</field>
+        <field name="search_view_id" ref="view_requisition_stage_matrix_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Product Pipeline Stage Quantity Matrix Dashboard
+            </p>
+            <p>
+                Provides a real-time executive matrix for Store Incharge and Registrar tracking product quantities at every workflow approval step (Draft → Dept Pending → Registrar Pending → Ready → Issued → Shortfall).
+            </p>
+        </field>
+    </record>
+</odoo>

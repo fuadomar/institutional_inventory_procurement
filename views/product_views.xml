@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- Product Template Form View Extension (Extends Native Odoo Product Catalog) -->
+        <record id="view_product_template_form_institutional" model="ir.ui.view">
+            <field name="name">product.template.form.institutional</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_only_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[@name='button_box']" position="inside">
+                    <button class="oe_stat_button" name="action_view_held_assets" type="object" icon="fa-laptop" invisible="institutional_item_type != 'asset'">
+                        <div class="o_stat_info">
+                            <field name="held_asset_count" class="o_stat_value"/>
+                            <span class="o_stat_text">Held Assets</span>
+                        </div>
+                    </button>
+                    <button class="oe_stat_button" name="action_view_consumed_supplies" type="object" icon="fa-cubes">
+                        <div class="o_stat_info">
+                            <field name="consumed_qty_total" class="o_stat_value"/>
+                            <span class="o_stat_text">Consumed Total</span>
+                        </div>
+                    </button>
+                    <button class="oe_stat_button" name="action_view_personnel_consumers" type="object" icon="fa-users">
+                        <div class="o_stat_info">
+                            <field name="personnel_consumer_count" class="o_stat_value"/>
+                            <span class="o_stat_text">Personnel</span>
+                        </div>
+                    </button>
+                </xpath>
+                <xpath expr="//field[@name='categ_id']" position="after">
+                    <field name="institutional_item_type" widget="radio" options="{'horizontal': true}"/>
+                    <field name="item_condition" widget="radio" options="{'horizontal': true}"/>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- Product Template Tree View Extension -->
+        <record id="view_product_template_tree_institutional" model="ir.ui.view">
+            <field name="name">product.template.tree.institutional</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_tree_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='categ_id']" position="after">
+                    <field name="institutional_item_type" optional="show"/>
+                    <field name="item_condition" optional="show"/>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- Product Template Search View Extension -->
+        <record id="view_product_template_search_institutional" model="ir.ui.view">
+            <field name="name">product.template.search.institutional</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_search_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//filter[@name='favorites']" position="before">
+                    <filter string="Shortfall / Need Order (Negative Forecast)" name="filter_shortfall" domain="[('is_shortfall', '=', True)]"/>
+                    <filter string="Consumables" name="filter_consumables" domain="[('institutional_item_type', '=', 'consumable')]"/>
+                    <filter string="Assets" name="filter_assets" domain="[('institutional_item_type', '=', 'asset')]"/>
+                    <separator/>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- Product Template Shortfall Tree View -->
+        <record id="view_product_template_tree_shortfall" model="ir.ui.view">
+            <field name="name">product.template.tree.shortfall</field>
+            <field name="model">product.template</field>
+            <field name="arch" type="xml">
+                <list string="Procurement Shortfall &amp; Reorder Analysis (Minus Forecast Items)" decoration-danger="qty_to_order &gt; 0">
+                    <field name="currency_id" column_invisible="1"/>
+                    <field name="name" string="Product / Item Name"/>
+                    <field name="categ_id" string="Category"/>
+                    <field name="institutional_item_type" widget="badge"/>
+                    <field name="qty_available" string="On Hand Qty"/>
+                    <field name="requisition_pending_qty" string="Pending Requisition Demand"/>
+                    <field name="forecast_shortfall_qty" string="Forecast Stock Balance"/>
+                    <field name="qty_to_order" string="Qty Needed to Order" sum="Total Units to Order"/>
+                    <field name="standard_price" string="Unit Purchase Cost" widget="monetary"/>
+                    <field name="reorder_cost_subtotal" string="Est. Reorder Budget (BDT ৳)" widget="monetary" sum="Total Reorder Budget (BDT ৳)"/>
+                </list>
+            </field>
+        </record>
+
+        <!-- Product Template Shortfall Graph View -->
+        <record id="view_product_template_graph_shortfall" model="ir.ui.view">
+            <field name="name">product.template.graph.shortfall</field>
+            <field name="model">product.template</field>
+            <field name="arch" type="xml">
+                <graph string="Procurement Demand &amp; Shortfall by Product" type="bar" sample="1">
+                    <field name="name"/>
+                    <field name="qty_to_order" type="measure"/>
+                    <field name="reorder_cost_subtotal" type="measure"/>
+                </graph>
+            </field>
+        </record>
+
+        <!-- Product Template Shortfall Pivot View -->
+        <record id="view_product_template_pivot_shortfall" model="ir.ui.view">
+            <field name="name">product.template.pivot.shortfall</field>
+            <field name="model">product.template</field>
+            <field name="arch" type="xml">
+                <pivot string="Procurement Shortfall Matrix (BDT ৳)" sample="1">
+                    <field name="categ_id" type="row"/>
+                    <field name="name" type="row"/>
+                    <field name="qty_to_order" type="measure"/>
+                    <field name="reorder_cost_subtotal" type="measure"/>
+                </pivot>
+            </field>
+        </record>
+
+        <!-- Actions for Item Master Catalog -->
+        <record id="action_institutional_consumables" model="ir.actions.act_window">
+            <field name="name">Consumable Supplies Catalog</field>
+            <field name="res_model">product.template</field>
+            <field name="view_mode">kanban,list,form</field>
+            <field name="domain">[('institutional_item_type', '=', 'consumable')]</field>
+            <field name="context">{'default_institutional_item_type': 'consumable', 'default_is_storable': True}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create and manage consumable supply products (paper, toner, reagents, stationery).
+                </p>
+            </field>
+        </record>
+
+        <record id="action_institutional_asset_products" model="ir.actions.act_window">
+            <field name="name">Asset Item Catalog</field>
+            <field name="res_model">product.template</field>
+            <field name="view_mode">kanban,list,form</field>
+            <field name="domain">[('institutional_item_type', '=', 'asset')]</field>
+            <field name="context">{'default_institutional_item_type': 'asset', 'default_is_storable': True, 'default_tracking': 'serial'}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create and manage asset products (computers, cameras, LAN cables, lab equipment).
+                </p>
+            </field>
+        </record>
+
+        <record id="action_institutional_all_products" model="ir.actions.act_window">
+            <field name="name">All Item Master Catalog</field>
+            <field name="res_model">product.template</field>
+            <field name="view_mode">kanban,list,form</field>
+            <field name="domain">[('institutional_item_type', '!=', False)]</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Master list of all institutional products (consumables &amp; assets).
+                </p>
+            </field>
+        </record>
+
+        <!-- Procurement Shortfall & Reorder Action -->
+        <record id="action_procurement_shortfall_analysis" model="ir.actions.act_window">
+            <field name="name">Procurement Shortfall &amp; Reorder Analysis</field>
+            <field name="res_model">product.template</field>
+            <field name="view_mode">list,graph,pivot,kanban,form</field>
+            <field name="domain">[('is_shortfall', '=', True)]</field>
+            <field name="context">{'search_default_filter_shortfall': 1}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    No items with negative forecast stock balance or procurement shortfall.
+                </p>
+            </field>
+        </record>
+
+        <record id="action_procurement_shortfall_analysis_tree" model="ir.actions.act_window.view">
+            <field name="sequence" eval="1"/>
+            <field name="view_mode">list</field>
+            <field name="view_id" ref="view_product_template_tree_shortfall"/>
+            <field name="act_window_id" ref="action_procurement_shortfall_analysis"/>
+        </record>
+
+        <record id="action_procurement_shortfall_analysis_graph" model="ir.actions.act_window.view">
+            <field name="sequence" eval="2"/>
+            <field name="view_mode">graph</field>
+            <field name="view_id" ref="view_product_template_graph_shortfall"/>
+            <field name="act_window_id" ref="action_procurement_shortfall_analysis"/>
+        </record>
+
+        <record id="action_procurement_shortfall_analysis_pivot" model="ir.actions.act_window.view">
+            <field name="sequence" eval="3"/>
+            <field name="view_mode">pivot</field>
+            <field name="view_id" ref="view_product_template_pivot_shortfall"/>
+            <field name="act_window_id" ref="action_procurement_shortfall_analysis"/>
+        </record>
+
+    </data>
+</odoo>

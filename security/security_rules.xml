@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <!-- Record Rule: Normal User sees only own requisitions -->
+        <record id="rule_requisition_normal_user" model="ir.rule">
+            <field name="name">Requisition: Normal User (Own Requests)</field>
+            <field name="model_id" ref="model_institutional_store_requisition"/>
+            <field name="domain_force">[('requested_by_id', '=', user.id)]</field>
+            <field name="groups" eval="[(4, ref('group_institutional_user'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+        <!-- Record Rule: Department Head sees own department requisitions -->
+        <record id="rule_requisition_dept_head" model="ir.rule">
+            <field name="name">Requisition: Department Head (Own Dept Requests)</field>
+            <field name="model_id" ref="model_institutional_store_requisition"/>
+            <field name="domain_force">['|', ('requested_by_id', '=', user.id), '|', ('department_id.manager_id.user_id', '=', user.id), ('department_id.member_ids.user_id', 'in', [user.id])]</field>
+            <field name="groups" eval="[(4, ref('group_institutional_dept_head'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+        <!-- Record Rule: Store Incharge / Registrar / Admin / Procurement Head sees all requisitions -->
+        <record id="rule_requisition_store_all" model="ir.rule">
+            <field name="name">Requisition: Store / Registrar / Admin / Procurement Head (All Requests)</field>
+            <field name="model_id" ref="model_institutional_store_requisition"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[
+                (4, ref('group_institutional_store_incharge')),
+                (4, ref('group_institutional_registrar')),
+                (4, ref('group_institutional_procurement_head')),
+                (4, ref('group_institutional_admin'))
+            ]"/>
+        </record>
+
+        <!-- Record Rule: Requisition Lines - Normal User & Dept Head see own department lines & executive lines -->
+        <record id="rule_requisition_line_dept_user" model="ir.rule">
+            <field name="name">Requisition Line: Dept User &amp; Head (Own Dept Lines)</field>
+            <field name="model_id" ref="model_institutional_store_requisition_line"/>
+            <field name="domain_force">['|', ('requisition_id.requested_by_id', '=', user.id), '|', ('department_id.manager_id.user_id', '=', user.id), ('department_id.member_ids.user_id', 'in', [user.id])]</field>
+            <field name="groups" eval="[
+                (4, ref('group_institutional_user')),
+                (4, ref('group_institutional_dept_head'))
+            ]"/>
+        </record>
+
+        <!-- Record Rule: Requisition Lines - Store / Registrar / Admin / Procurement Head see all lines -->
+        <record id="rule_requisition_line_admin" model="ir.rule">
+            <field name="name">Requisition Line: Store / Registrar / Admin (All Lines)</field>
+            <field name="model_id" ref="model_institutional_store_requisition_line"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[
+                (4, ref('group_institutional_store_incharge')),
+                (4, ref('group_institutional_registrar')),
+                (4, ref('group_institutional_procurement_head')),
+                (4, ref('group_institutional_admin'))
+            ]"/>
+        </record>
+
+        <!-- Record Rule: Asset Custody Log - Store / Registrar / Admin / Procurement Head see all logs -->
+        <record id="rule_asset_custody_log_admin" model="ir.rule">
+            <field name="name">Asset Custody Log: Store / Registrar / Admin (All Logs)</field>
+            <field name="model_id" ref="model_institutional_asset_custody_log"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="groups" eval="[
+                (4, ref('group_institutional_store_incharge')),
+                (4, ref('group_institutional_registrar')),
+                (4, ref('group_institutional_procurement_head')),
+                (4, ref('group_institutional_admin'))
+            ]"/>
+        </record>
+
+    </data>
+</odoo>

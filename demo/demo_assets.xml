@@ -1,0 +1,444 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <!-- Asset 1: Dell Latitude 5440 Laptop (Wet Process Engineering) -->
+        <record id="demo_asset_laptop_01" model="institutional.asset.item">
+            <field name="name">AST-LTP-2026-001</field>
+            <field name="product_id" ref="demo_product_laptop_dell"/>
+            <field name="serial_number">SN-DELL-LAT5440-BUTEX-01</field>
+            <field name="condition">intact</field>
+            <field name="status">issued</field>
+            <field name="department_id" ref="demo_dept_wpe"/>
+            <field name="assigned_user_id" ref="demo_user_assoc_repon"/>
+            <field name="location">Wet Process Engineering Lab, Desk 02</field>
+            <field name="asset_value">135000.00</field>
+            <field name="notes">Dell Latitude Core i7 Workstation Laptop with 32GB Upgraded RAM.</field>
+        </record>
+
+        <!-- Custody Lifecycle Logs for Laptop 01 -->
+        <record id="demo_custody_ltp1_acq" model="institutional.asset.custody.log">
+            <field name="asset_id" ref="demo_asset_laptop_01"/>
+            <field name="event_date">2026-01-15 09:30:00</field>
+            <field name="event_type">acquisition</field>
+            <field name="condition">intact</field>
+            <field name="notes">Acquired into Central Store from Dell Authorized Vendor (PO #BUTEX/IT/2026/012).</field>
+            <field name="logged_by_id" ref="demo_user_store_incharge"/>
+        </record>
+
+        <record id="demo_custody_ltp1_issue1" model="institutional.asset.custody.log">
+            <field name="asset_id" ref="demo_asset_laptop_01"/>
+            <field name="event_date">2026-02-01 10:00:00</field>
+            <field name="event_type">issue</field>
+            <field name="new_holder_id" ref="demo_user_it_director"/>
+            <field name="new_department_id" ref="demo_dept_it"/>
+            <field name="condition">intact</field>
+            <field name="notes">Issued to Engr. Md. Moniruzzaman (Director IT Cell) for campus network expansion.</field>
+            <field name="logged_by_id" ref="demo_user_store_incharge"/>
+        </record>
+
+        <record id="demo_custody_ltp1_return" model="institutional.asset.custody.log">
+            <field name="asset_id" ref="demo_asset_laptop_01"/>
+            <field name="event_date">2026-03-01 14:30:00</field>
+            <field name="event_type">return</field>
+            <field name="previous_holder_id" ref="demo_user_it_director"/>
+            <field name="previous_department_id" ref="demo_dept_it"/>
+            <field name="condition">used</field>
+            <field name="notes">Returned to Central Store Office after network expansion project completed.</field>
+            <field name="logged_by_id" ref="demo_user_store_incharge"/>
+        </record>
+
+        <record id="demo_custody_ltp1_reissue" model="institutional.asset.custody.log">
+            <field name="asset_id" ref="demo_asset_laptop_01"/>
+            <field name="event_date">2026-03-15 11:00:00</field>
+            <field name="event_type">transfer</field>
+            <field name="previous_holder_id" ref="demo_user_store_incharge"/>
+            <field name="new_holder_id" ref="demo_user_assoc_repon"/>
+            <field name="new_department_id" ref="demo_dept_wpe"/>
+            <field name="condition">intact</field>
+            <field name="notes">Re-issued to Dr. Engr. Md. Reazuddin Repon (Associate Professor, WPE) for research project.</field>
+            <field name="logged_by_id" ref="demo_user_store_incharge"/>
+        </record>
+
+        <!-- Sub-Components for Laptop 01 -->
+        <record id="demo_comp_ltp1_ram1" model="institutional.asset.component">
+            <field name="asset_id" ref="demo_asset_laptop_01"/>
+            <field name="status">installed</field>
+            <field name="component_type">ram</field>
+            <field name="name">SK Hynix 16GB DDR5 4800MHz RAM</field>
+            <field name="capacity_or_spec">16 GB DDR5 SODIMM</field>
+            <field name="serial_number">SN-RAM-SKH-5501</field>
+            <field name="condition">intact</field>
+            <field name="installed_date">2026-01-15</field>
+        </record>
+
+        <record id="demo_comp_ltp1_ram2" model="institutional.asset.component">
+            <field name="asset_id" ref="demo_asset_laptop_01"/>
+            <field name="status">installed</field>
+            <field name="component_type">ram</field>
+            <field name="name">Crucial 16GB DDR5 4800MHz RAM Module</field>
+            <field name="capacity_or_spec">16 GB DDR5 SODIMM (Upgraded)</field>
+            <field name="serial_number">SN-RAM-CRU-9920</field>
+            <field name="condition">intact</field>
+            <field name="installed_date">2026-03-20</field>
+            <field name="notes">Transferred from IT Spare Stock into AST-LTP-2026-001 to double RAM capacity to 32GB.</field>
+        </record>
+
+        <record id="demo_comp_ltp1_charger2" model="institutional.asset.component">
+            <field name="asset_id" ref="demo_asset_laptop_01"/>
+            <field name="status">installed</field>
+            <field name="component_type">charger</field>
+            <field name="name">Dell Original 65W USB-C Type-C AC Adapter</field>
+            <field name="capacity_or_spec">65W 20V 3.25A</field>
+            <field name="serial_number">SN-CHG-DELL-65W-02</field>
+            <field name="condition">intact</field>
+            <field name="installed_date">2026-03-22</field>
+        </record>
+
+        <record id="demo_comp_ltp1_battery" model="institutional.asset.component">
+            <field name="asset_id" ref="demo_asset_laptop_01"/>
+            <field name="status">installed</field>
+            <field name="component_type">battery</field>
+            <field name="name">Dell 54Wh 4-Cell ExpressCharge Battery</field>
+            <field name="capacity_or_spec">54 Wh Lithium-Ion</field>
+            <field name="serial_number">SN-BAT-DELL-54WH</field>
+            <field name="condition">intact</field>
+        </record>
+
+        <record id="demo_comp_ltp1_display" model="institutional.asset.component">
+            <field name="asset_id" ref="demo_asset_laptop_01"/>
+            <field name="status">installed</field>
+            <field name="component_type">display</field>
+            <field name="name">14" FHD (1920x1080) Anti-Glare IPS Display</field>
+            <field name="capacity_or_spec">14.0 Inch 250 nits</field>
+            <field name="condition">intact</field>
+        </record>
+
+        <!-- Component History Logs for Laptop 01 (RAM Transfer & Charger Maintenance) -->
+        <record id="demo_complog_ltp1_ram" model="institutional.asset.component.history">
+            <field name="asset_id" ref="demo_asset_laptop_01"/>
+            <field name="source_asset_id" eval="False"/>
+            <field name="dest_asset_id" ref="demo_asset_laptop_01"/>
+            <field name="component_id" ref="demo_comp_ltp1_ram2"/>
+            <field name="swap_date">2026-03-20</field>
+            <field name="component_type">ram</field>
+            <field name="action_type">transferred</field>
+            <field name="old_component_name">From: IT Central Store Spare Stock</field>
+            <field name="new_component_name">To: Dell Laptop AST-LTP-2026-001 (16GB RAM Added)</field>
+            <field name="technician_id" ref="demo_user_store_incharge"/>
+            <field name="reason">Inter-Asset Component Addition: Upgraded Laptop RAM from 16GB to 32GB for heavy textile simulation software.</field>
+        </record>
+
+        <record id="demo_complog_ltp1_chg" model="institutional.asset.component.history">
+            <field name="asset_id" ref="demo_asset_laptop_01"/>
+            <field name="source_asset_id" ref="demo_asset_laptop_01"/>
+            <field name="dest_asset_id" ref="demo_asset_laptop_01"/>
+            <field name="component_id" ref="demo_comp_ltp1_charger2"/>
+            <field name="swap_date">2026-03-22</field>
+            <field name="component_type">charger</field>
+            <field name="action_type">replaced</field>
+            <field name="old_component_name">Damaged 65W Charger (SN-CHG-DELL-65W-01)</field>
+            <field name="new_component_name">New Dell 65W USB-C Charger (SN-CHG-DELL-65W-02)</field>
+            <field name="technician_id" ref="demo_user_store_incharge"/>
+            <field name="reason">Maintenance Swap: Replaced damaged power adapter with genuine new Dell 65W charger.</field>
+        </record>
+
+        <!-- Asset 2: Lenovo ThinkPad Laptop (VC Executive Entity - Standalone) -->
+        <record id="demo_asset_laptop_vc" model="institutional.asset.item">
+            <field name="name">AST-LTP-2026-002</field>
+            <field name="product_id" ref="demo_product_laptop_thinkpad"/>
+            <field name="serial_number">SN-LENOVO-X1-VC-BUTEX-01</field>
+            <field name="condition">intact</field>
+            <field name="status">issued</field>
+            <field name="department_id" ref="demo_dept_vc"/>
+            <field name="assigned_user_id" ref="demo_user_vc"/>
+            <field name="location">Vice-Chancellor Office, Executive Suite</field>
+            <field name="asset_value">165000.00</field>
+            <field name="notes">Executive ThinkPad X1 Ultrabook for Vice-Chancellor Prof. Dr. Engr. Md. Zulhash Uddin.</field>
+        </record>
+
+        <!-- Custody Log for VC Laptop -->
+        <record id="demo_custody_vc_ltp_acq" model="institutional.asset.custody.log">
+            <field name="asset_id" ref="demo_asset_laptop_vc"/>
+            <field name="event_date">2026-01-10 10:00:00</field>
+            <field name="event_type">acquisition</field>
+            <field name="condition">intact</field>
+            <field name="notes">Received into Central Store stock.</field>
+            <field name="logged_by_id" ref="demo_user_store_incharge"/>
+        </record>
+
+        <record id="demo_custody_vc_ltp_issue" model="institutional.asset.custody.log">
+            <field name="asset_id" ref="demo_asset_laptop_vc"/>
+            <field name="event_date">2026-01-12 11:30:00</field>
+            <field name="event_type">issue</field>
+            <field name="new_holder_id" ref="demo_user_vc"/>
+            <field name="condition">intact</field>
+            <field name="notes">Issued directly to Vice-Chancellor Prof. Dr. Engr. Md. Zulhash Uddin.</field>
+            <field name="logged_by_id" ref="demo_user_store_incharge"/>
+        </record>
+
+        <!-- Asset 3: Dell Laptop (Textile Engineering Dept Head) -->
+        <record id="demo_asset_laptop_03" model="institutional.asset.item">
+            <field name="name">AST-LTP-2026-003</field>
+            <field name="product_id" ref="demo_product_laptop_dell"/>
+            <field name="serial_number">SN-DELL-LAT5440-TE-03</field>
+            <field name="condition">intact</field>
+            <field name="status">issued</field>
+            <field name="department_id" ref="demo_dept_te"/>
+            <field name="assigned_user_id" ref="demo_user_prof_mashiur"/>
+            <field name="location">Textile Engineering Dept Head Office</field>
+            <field name="asset_value">135000.00</field>
+        </record>
+
+        <!-- Asset 4: Dell Laptop (Apparel Engineering Asst Prof) -->
+        <record id="demo_asset_laptop_04" model="institutional.asset.item">
+            <field name="name">AST-LTP-2026-004</field>
+            <field name="product_id" ref="demo_product_laptop_dell"/>
+            <field name="serial_number">SN-DELL-LAT5440-AE-04</field>
+            <field name="condition">intact</field>
+            <field name="status">issued</field>
+            <field name="department_id" ref="demo_dept_ae"/>
+            <field name="assigned_user_id" ref="demo_user_asst_rashed"/>
+            <field name="location">Apparel Engineering Computer Lab</field>
+            <field name="asset_value">135000.00</field>
+        </record>
+
+        <!-- Asset 5: DSLR Camera Kit (Public Relations & Registrar Office) -->
+        <record id="demo_asset_camera_01" model="institutional.asset.item">
+            <field name="name">AST-CAM-2026-001</field>
+            <field name="product_id" ref="demo_product_camera"/>
+            <field name="serial_number">SN-CANON-90D-BUTEX-Media01</field>
+            <field name="condition">intact</field>
+            <field name="status">issued</field>
+            <field name="department_id" ref="demo_dept_registrar"/>
+            <field name="assigned_user_id" ref="demo_user_office_assistant"/>
+            <field name="location">Registrar Office &amp; Media Documentation Cell</field>
+            <field name="asset_value">140000.00</field>
+            <field name="notes">Canon EOS 90D DSLR Camera Kit for BUTEX Official Events, Research &amp; Media Documentation.</field>
+        </record>
+
+        <!-- Custody Logs for Camera -->
+        <record id="demo_custody_cam_acq" model="institutional.asset.custody.log">
+            <field name="asset_id" ref="demo_asset_camera_01"/>
+            <field name="event_date">2026-02-01 10:00:00</field>
+            <field name="event_type">acquisition</field>
+            <field name="condition">intact</field>
+            <field name="notes">Acquired into Central Store stock.</field>
+            <field name="logged_by_id" ref="demo_user_store_incharge"/>
+        </record>
+
+        <record id="demo_custody_cam_issue" model="institutional.asset.custody.log">
+            <field name="asset_id" ref="demo_asset_camera_01"/>
+            <field name="event_date">2026-02-15 14:00:00</field>
+            <field name="event_type">issue</field>
+            <field name="new_holder_id" ref="demo_user_office_assistant"/>
+            <field name="new_department_id" ref="demo_dept_registrar"/>
+            <field name="condition">intact</field>
+            <field name="notes">Issued to Md. Jahangir Alam (Office Assistant) for Annual Convocation media coverage.</field>
+            <field name="logged_by_id" ref="demo_user_store_incharge"/>
+        </record>
+
+        <!-- Sub-Components for Camera (Memory Upgrade Lifecycle) -->
+        <record id="demo_comp_cam_lens" model="institutional.asset.component">
+            <field name="asset_id" ref="demo_asset_camera_01"/>
+            <field name="status">installed</field>
+            <field name="component_type">camera_lens</field>
+            <field name="name">Canon EF-S 18-135mm f/3.5-5.6 IS USM Lens</field>
+            <field name="capacity_or_spec">18-135mm Image Stabilizer</field>
+            <field name="serial_number">SN-LENS-CANON-18135</field>
+            <field name="condition">intact</field>
+        </record>
+
+        <record id="demo_comp_cam_sd_1tb" model="institutional.asset.component">
+            <field name="asset_id" ref="demo_asset_camera_01"/>
+            <field name="status">installed</field>
+            <field name="component_type">storage</field>
+            <field name="name">1TB Ultra High-Speed CFexpress Type-B Memory Card</field>
+            <field name="capacity_or_spec">1 TB (1700 MB/s Read Speed)</field>
+            <field name="serial_number">SN-CFX-1TB-9081</field>
+            <field name="condition">intact</field>
+            <field name="installed_date">2026-03-05</field>
+            <field name="notes">Upgraded memory card for 4K video recording capability.</field>
+        </record>
+
+        <!-- Component Swap History for Camera -->
+        <record id="demo_complog_cam_sd" model="institutional.asset.component.history">
+            <field name="asset_id" ref="demo_asset_camera_01"/>
+            <field name="source_asset_id" ref="demo_asset_camera_01"/>
+            <field name="dest_asset_id" ref="demo_asset_camera_01"/>
+            <field name="component_id" ref="demo_comp_cam_sd_1tb"/>
+            <field name="swap_date">2026-03-05</field>
+            <field name="component_type">storage</field>
+            <field name="action_type">replaced</field>
+            <field name="old_component_name">SanDisk 512GB SD Card (SN-SD-512GB)</field>
+            <field name="new_component_name">1TB Ultra High-Speed CFexpress Card (SN-CFX-1TB-9081)</field>
+            <field name="technician_id" ref="demo_user_store_incharge"/>
+            <field name="reason">Memory Card Upgrade: Swapped 512GB SD card with 1TB high-speed CFexpress card to support high-frame rate 4K video recording during university events.</field>
+        </record>
+
+        <!-- Asset 6: Heavy-Duty Store Steel Almirah (Central Store) -->
+        <record id="demo_asset_almirah_01" model="institutional.asset.item">
+            <field name="name">AST-ALM-2026-001</field>
+            <field name="product_id" ref="demo_product_almirah"/>
+            <field name="serial_number">SN-ALM-STEEL-STORE-01</field>
+            <field name="condition">intact</field>
+            <field name="status">issued</field>
+            <field name="department_id" ref="demo_dept_store"/>
+            <field name="assigned_user_id" ref="demo_user_store_incharge"/>
+            <field name="location">Central Store Office, Record Room 01</field>
+            <field name="asset_value">42000.00</field>
+            <field name="notes">Central Store Steel Security Almirah for official registers, licenses, and sensitive items.</field>
+        </record>
+
+        <!-- Sub-Components for Store Almirah -->
+        <record id="demo_comp_alm_drawer2" model="institutional.asset.component">
+            <field name="asset_id" ref="demo_asset_almirah_01"/>
+            <field name="status">installed</field>
+            <field name="component_type">drawer</field>
+            <field name="name">Reinforced Heavy-Duty Steel Drawer #3 Assembly</field>
+            <field name="capacity_or_spec">Gauge 16 Steel Drawer Unit</field>
+            <field name="serial_number">SN-DRW-REINFORCED-03</field>
+            <field name="condition">intact</field>
+            <field name="installed_date">2026-04-10</field>
+        </record>
+
+        <record id="demo_comp_alm_lock" model="institutional.asset.component">
+            <field name="asset_id" ref="demo_asset_almirah_01"/>
+            <field name="status">installed</field>
+            <field name="component_type">lock</field>
+            <field name="name">Godrej Central Double-Bitted Security Lock</field>
+            <field name="capacity_or_spec">High-Security Lever Lock</field>
+            <field name="serial_number">SN-LCK-GODREJ-441</field>
+            <field name="condition">intact</field>
+        </record>
+
+        <!-- Component Replacement History for Almirah Drawer -->
+        <record id="demo_complog_alm_drawer" model="institutional.asset.component.history">
+            <field name="asset_id" ref="demo_asset_almirah_01"/>
+            <field name="source_asset_id" ref="demo_asset_almirah_01"/>
+            <field name="dest_asset_id" ref="demo_asset_almirah_01"/>
+            <field name="component_id" ref="demo_comp_alm_drawer2"/>
+            <field name="swap_date">2026-04-10</field>
+            <field name="component_type">drawer</field>
+            <field name="action_type">replaced</field>
+            <field name="old_component_name">Damaged Drawer #3 Slider Assembly</field>
+            <field name="new_component_name">Reinforced Steel Drawer #3 Assembly (SN-DRW-REINFORCED-03)</field>
+            <field name="technician_id" ref="demo_user_store_incharge"/>
+            <field name="reason">Maintenance Replacement: Drawer #3 slider rail mechanism bent during audit; replaced with reinforced steel drawer assembly.</field>
+        </record>
+
+        <!-- Asset 7: Hikvision Security CCTV System (Campus Gate & Store) -->
+        <record id="demo_asset_cctv_01" model="institutional.asset.item">
+            <field name="name">AST-CCTV-2026-001</field>
+            <field name="product_id" ref="demo_product_cctv"/>
+            <field name="serial_number">SN-HIKVISION-4K-NVR-BUTEX</field>
+            <field name="condition">intact</field>
+            <field name="status">issued</field>
+            <field name="department_id" ref="demo_dept_it"/>
+            <field name="assigned_user_id" ref="demo_user_net_admin"/>
+            <field name="location">Campus Main Gate 1 &amp; Central Store Perimeter</field>
+            <field name="asset_value">115000.00</field>
+            <field name="notes">16-Channel 4K CCTV Monitoring &amp; NVR System.</field>
+        </record>
+
+        <!-- Sub-Components for CCTV System -->
+        <record id="demo_comp_cctv_nvr" model="institutional.asset.component">
+            <field name="asset_id" ref="demo_asset_cctv_01"/>
+            <field name="status">installed</field>
+            <field name="component_type">cctv_nvr</field>
+            <field name="name">Hikvision DS-7616NI-K2 16-Channel 4K NVR Unit</field>
+            <field name="capacity_or_spec">16 Channel PoE 4K Output</field>
+            <field name="serial_number">SN-NVR-HIK-16CH</field>
+            <field name="condition">intact</field>
+        </record>
+
+        <record id="demo_comp_cctv_hdd" model="institutional.asset.component">
+            <field name="asset_id" ref="demo_asset_cctv_01"/>
+            <field name="status">installed</field>
+            <field name="component_type">storage</field>
+            <field name="name">4TB Western Digital Purple Surveillance HDD</field>
+            <field name="capacity_or_spec">4 TB 64MB Cache 24x7 Storage</field>
+            <field name="serial_number">SN-HDD-WDPURPLE-4TB</field>
+            <field name="condition">intact</field>
+            <field name="installed_date">2026-02-28</field>
+        </record>
+
+        <record id="demo_comp_cctv_cam1" model="institutional.asset.component">
+            <field name="asset_id" ref="demo_asset_cctv_01"/>
+            <field name="status">installed</field>
+            <field name="component_type">cctv_camera</field>
+            <field name="name">Hikvision 4K Outdoor IR Dome IP Camera (Main Gate)</field>
+            <field name="capacity_or_spec">8MP 4K Ultra HD IR 30m</field>
+            <field name="serial_number">SN-CAM-HIK-GATE1</field>
+            <field name="condition">intact</field>
+        </record>
+
+        <!-- Component Swap History for CCTV (HDD Storage Expansion) -->
+        <record id="demo_complog_cctv_hdd" model="institutional.asset.component.history">
+            <field name="asset_id" ref="demo_asset_cctv_01"/>
+            <field name="source_asset_id" ref="demo_asset_cctv_01"/>
+            <field name="dest_asset_id" ref="demo_asset_cctv_01"/>
+            <field name="component_id" ref="demo_comp_cctv_hdd"/>
+            <field name="swap_date">2026-02-28</field>
+            <field name="component_type">storage</field>
+            <field name="action_type">replaced</field>
+            <field name="old_component_name">1TB Standard Desktop HDD (SN-HDD-1TB)</field>
+            <field name="new_component_name">4TB WD Purple Surveillance HDD (SN-HDD-WDPURPLE-4TB)</field>
+            <field name="technician_id" ref="demo_user_net_admin"/>
+            <field name="reason">Storage Capacity Expansion: Upgraded NVR hard disk from 1TB to 4TB WD Purple surveillance drive to increase video recording retention from 7 days to 30 days.</field>
+        </record>
+
+        <!-- Asset 8: Executive Leather Sofa Set (VC Executive Suite) -->
+        <record id="demo_asset_sofa_vc" model="institutional.asset.item">
+            <field name="name">AST-SOF-2026-001</field>
+            <field name="product_id" ref="demo_product_sofa"/>
+            <field name="serial_number">SN-SOFA-EXECUTIVE-VC-01</field>
+            <field name="condition">intact</field>
+            <field name="status">issued</field>
+            <field name="department_id" ref="demo_dept_vc"/>
+            <field name="assigned_user_id" ref="demo_user_vc"/>
+            <field name="location">Vice-Chancellor Office, Executive Suite</field>
+            <field name="asset_value">85000.00</field>
+        </record>
+
+        <!-- Asset 9: Executive Leather Sofa Set (Registrar Office) -->
+        <record id="demo_asset_sofa_reg" model="institutional.asset.item">
+            <field name="name">AST-SOF-2026-002</field>
+            <field name="product_id" ref="demo_product_sofa"/>
+            <field name="serial_number">SN-SOFA-EXECUTIVE-REG-02</field>
+            <field name="condition">intact</field>
+            <field name="status">issued</field>
+            <field name="department_id" ref="demo_dept_registrar"/>
+            <field name="assigned_user_id" ref="demo_user_registrar"/>
+            <field name="location">Registrar Office, Visitor Lounge</field>
+            <field name="asset_value">85000.00</field>
+        </record>
+
+        <!-- Asset 10: Ergonomic Executive Chair (Head, Dyes & Chemicals) -->
+        <record id="demo_asset_chair_dce" model="institutional.asset.item">
+            <field name="name">AST-CHR-2026-001</field>
+            <field name="product_id" ref="demo_product_chair"/>
+            <field name="serial_number">SN-CHR-MESH-DCE-01</field>
+            <field name="condition">intact</field>
+            <field name="status">issued</field>
+            <field name="department_id" ref="demo_dept_dce"/>
+            <field name="assigned_user_id" ref="demo_user_prof_ummul"/>
+            <field name="location">Dyes &amp; Chemicals Dept Head Room</field>
+            <field name="asset_value">18500.00</field>
+        </record>
+
+        <!-- Asset 11: HP LaserJet Printer (Wet Process Engineering) -->
+        <record id="demo_asset_printer_wpe" model="institutional.asset.item">
+            <field name="name">AST-PRN-2026-001</field>
+            <field name="product_id" ref="demo_product_printer"/>
+            <field name="serial_number">SN-HP-M404-WPE-PRN01</field>
+            <field name="condition">intact</field>
+            <field name="status">issued</field>
+            <field name="department_id" ref="demo_dept_wpe"/>
+            <field name="assigned_user_id" ref="demo_user_head_wpe"/>
+            <field name="location">Wet Process Engineering Department Office</field>
+            <field name="asset_value">38000.00</field>
+        </record>
+
+    </data>
+</odoo>

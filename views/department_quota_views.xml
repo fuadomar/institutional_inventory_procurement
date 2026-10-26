@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- Department Quota Tree View -->
+        <record id="view_department_quota_tree" model="ir.ui.view">
+            <field name="name">institutional.department.quota.tree</field>
+            <field name="model">institutional.department.quota</field>
+            <field name="arch" type="xml">
+                <list string="Department Annual Quota Allocations" 
+                      decoration-danger="status == 'exceeded'" 
+                      decoration-warning="status == 'warning'" 
+                      decoration-success="status == 'ok'">
+                    <field name="fiscal_year"/>
+                    <field name="department_id"/>
+                    <field name="product_id"/>
+                    <field name="allocated_qty"/>
+                    <field name="consumed_qty"/>
+                    <field name="remaining_qty"/>
+                    <field name="usage_pct" widget="progressbar"/>
+                    <field name="status" widget="badge" 
+                           decoration-success="status == 'ok'" 
+                           decoration-warning="status == 'warning'" 
+                           decoration-danger="status == 'exceeded'"/>
+                    <field name="allocated_value" widget="monetary"/>
+                    <field name="consumed_value" widget="monetary"/>
+                    <field name="currency_id" column_invisible="True"/>
+                </list>
+            </field>
+        </record>
+
+        <!-- Department Quota Form View -->
+        <record id="view_department_quota_form" model="ir.ui.view">
+            <field name="name">institutional.department.quota.form</field>
+            <field name="model">institutional.department.quota</field>
+            <field name="arch" type="xml">
+                <form string="Department Annual Quota Allocation">
+                    <header>
+                        <field name="status" widget="statusbar" statusbar_visible="ok,warning,exceeded"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Quota Reference"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group string="Allocation Configuration">
+                                <field name="fiscal_year"/>
+                                <field name="department_id"/>
+                                <field name="product_id"/>
+                                <field name="category_id"/>
+                            </group>
+                            <group string="Quota Thresholds &amp; Balances">
+                                <field name="allocated_qty"/>
+                                <field name="consumed_qty"/>
+                                <field name="remaining_qty"/>
+                                <field name="usage_pct" widget="progressbar"/>
+                            </group>
+                        </group>
+                        <group string="Financial Budget Values">
+                            <group>
+                                <field name="currency_id" invisible="True"/>
+                                <field name="unit_cost" widget="monetary"/>
+                            </group>
+                            <group>
+                                <field name="allocated_value" widget="monetary"/>
+                                <field name="consumed_value" widget="monetary"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Quota Notes &amp; Governance Rules" name="notes">
+                                <field name="notes" placeholder="Enter notes regarding annual budget allocation committee approval or thresholds..."/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Department Quota Kanban View -->
+        <record id="view_department_quota_kanban" model="ir.ui.view">
+            <field name="name">institutional.department.quota.kanban</field>
+            <field name="model">institutional.department.quota</field>
+            <field name="arch" type="xml">
+                <kanban class="o_kanban_mobile" default_group_by="department_id">
+                    <field name="name"/>
+                    <field name="department_id"/>
+                    <field name="product_id"/>
+                    <field name="allocated_qty"/>
+                    <field name="consumed_qty"/>
+                    <field name="remaining_qty"/>
+                    <field name="usage_pct"/>
+                    <field name="status"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_global_click record_box p-3 border rounded mb-2 bg-card">
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <strong class="text-primary"><field name="product_id"/></strong>
+                                    <span t-attf-class="badge #{record.status.raw_value == 'ok' ? 'text-bg-success' : (record.status.raw_value == 'warning' ? 'text-bg-warning' : 'text-bg-danger')}">
+                                        <field name="status"/>
+                                    </span>
+                                </div>
+                                <div class="text-muted small mb-2">
+                                    Department: <field name="department_id"/><br/>
+                                    Fiscal Year: <field name="fiscal_year"/>
+                                </div>
+                                <div class="progress mb-2" style="height: 10px;">
+                                    <div class="progress-bar" role="progressbar" 
+                                         t-att-style="'width: ' + record.usage_pct.raw_value + '%'"
+                                         t-attf-class="#{record.status.raw_value == 'ok' ? 'bg-success' : (record.status.raw_value == 'warning' ? 'bg-warning' : 'bg-danger')}">
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-between small text-secondary">
+                                    <span>Allocated: <strong><field name="allocated_qty"/></strong></span>
+                                    <span>Consumed: <strong><field name="consumed_qty"/></strong></span>
+                                    <span>Remaining: <strong><field name="remaining_qty"/></strong></span>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <!-- Department Quota Search View -->
+        <record id="view_department_quota_search" model="ir.ui.view">
+            <field name="name">institutional.department.quota.search</field>
+            <field name="model">institutional.department.quota</field>
+            <field name="arch" type="xml">
+                <search string="Search Quotas">
+                    <field name="name"/>
+                    <field name="department_id"/>
+                    <field name="product_id"/>
+                    <field name="fiscal_year"/>
+                    <filter string="Exceeded Quotas" name="exceeded" domain="[('status', '=', 'exceeded')]"/>
+                    <filter string="Warning Threshold (≥80%)" name="warning" domain="[('status', '=', 'warning')]"/>
+                    <separator/>
+                    <filter string="Department" name="groupby_dept" context="{'group_by': 'department_id'}"/>
+                    <filter string="Product" name="groupby_product" context="{'group_by': 'product_id'}"/>
+                    <filter string="Fiscal Year" name="groupby_year" context="{'group_by': 'fiscal_year'}"/>
+                    <filter string="Quota Status" name="groupby_status" context="{'group_by': 'status'}"/>
+                </search>
+            </field>
+        </record>
+
+        <!-- Department Quota Action -->
+        <record id="action_department_quota" model="ir.actions.act_window">
+            <field name="name">Department Annual Quota Allocations</field>
+            <field name="res_model">institutional.department.quota</field>
+            <field name="view_mode">list,kanban,form</field>
+            <field name="search_view_id" ref="view_department_quota_search"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    No Department Annual Quota Allocations found.
+                </p>
+                <p>
+                    Set beginning-of-year product supply quotas per department to manage baseline demand and prevent unauthorized over-budget requisitions.
+                </p>
+            </field>
+        </record>
+
+    </data>
+</odoo>
